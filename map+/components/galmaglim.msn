@@ -1,0 +1,11 @@
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td nowrap><small>Предельная звездная величина: </small></td><td nowrap><small>
+<input type="text" size="5" name="galmaglim" value="<% sprintf("%5.2f",$galmaglim) %>">
+</small></td></tr></table>
+
+<%ARGS>
+ $galmaglim	=> undef
+</%ARGS>
+
+<%INIT>
+</%INIT>

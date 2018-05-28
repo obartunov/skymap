@@ -1,0 +1,40 @@
+<table border="0" cellspacing="0" cellpadding="1" bgcolor="#008080" width="100%">
+<tr><td nowrap width="100%" bgcolor="#008080">
+<small><b><font color="white">Stars</font></b></small></td></tr>
+<tr><td nowrap width="100%" bgcolor="#008080">
+<table border="0" cellspacing="2" cellpadding="0" bgcolor="#CCFFFF" width="100%">
+<tr><td nowrap><& maglim.msn,
+   maglim	=> $maglim,
+&></td></tr>
+% if ($complex_form==1) {
+<tr><td nowrap valign="top"><small><input type=checkbox name=printsl value=1 
+% if ($printsl eq 1) {
+	checked 
+% }
+>Print stellar magnitudes for</small></td></tr>
+<tr><td nowrap valign="top"><small>stars from
+<input type="text" name="slbr" value="<% sprintf("%4.1f",$slbr) %>" size=5>
+ to <input type="text" name="slf"  value="<% sprintf("%4.1f",$slf)  %>"
+size=5></small></td></tr>
+% } else {
+<input type="hidden" name="printsl" value="0">
+<input type="hidden" name="slbr" value="0.0">
+<input type="hidden" name="slf" value="13.0">
+% }
+</table>
+</td></tr>
+</table>
+
+<%ARGS>
+ $maglim	=> undef
+ $slbr		=> undef
+ $slf		=> undef
+ $printsl	=> undef
+ $complex_form	=> undef
+</%ARGS>
+
+<%ONCE>
+</%ONCE>
+
+<%INIT>
+</%INIT>

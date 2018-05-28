@@ -1,0 +1,79 @@
+<table border="0" cellspacing="0" cellpadding="1" bgcolor="#800080" width="100%">
+<tr><td nowrap><small><input type=checkbox name=rc3disp value="1" 
+% if ($rc3disp eq 1) {
+	checked 
+% }
+>
+%#</small></td><td nowrap align="left"><small>
+<b><font color="white">Галактики</font></b></small></td></tr>
+<tr><td nowrap colspan=1 bgcolor="#800080" width="100%">
+<table width="100%" border="0" cellspacing="2" cellpadding="0" bgcolor="#FFCCFF">
+<tr><td nowrap><& galmaglim.msn,
+   galmaglim	=> $galmaglim,
+&></td></tr>
+<tr><td nowrap>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td nowrap><small><input type=checkbox 
+name=supgalmag value="1" 
+% if ($supgalmag eq 1) {
+	checked 
+% }
+></small></td><td nowrap><small>Только с известной яркостью</small></td></tr>
+<tr><td nowrap><small><input type=checkbox
+name=printngc3 value="1" 
+% if ($printngc3 eq 1) {
+	checked 
+% }
+></small></td><td nowrap><small>Показывать основные обозначения</small></td></tr>
+<tr><td nowrap><small><input type=checkbox 
+name=printmag3 value="1"
+% if ($printmag3 eq 1) {
+	checked 
+% }
+></small></td><td nowrap><small>Подписывать звездные величины</small></td></tr>
+% if ($complex_form==1) {
+<tr><td nowrap><small><input type=checkbox 
+name=printic3 value="1"
+% if ($printic3 eq 1) {
+	checked 
+% }
+></small></td><td nowrap><small>Дополнительные обозначения 1</small></td></tr>
+<tr><td nowrap><small><input type=checkbox name=printugc3 value="1" 
+% if ($printugc3 eq 1) {
+	checked 
+% }
+></small></td><td nowrap><small>Дополнительные обозначения 2</small></td></tr>
+<tr><td nowrap><small><input type=checkbox 
+name=printpgc3 value="1"
+% if ($printpgc3 eq 1) {
+	checked 
+% }
+></small></td><td nowrap><small>Дополнительные обозначения 3</small></td></tr>
+
+% } else {
+<input type="hidden" name="printic3" value="0">
+<input type="hidden" name="printugc3" value="0">
+<input type="hidden" name="printpgc3" value="0">
+% }
+</table></td></tr>
+</table>
+</td></tr>
+</table>
+
+<%ARGS>
+ $rc3disp	=> undef
+ $galmaglim	=> undef
+ $supgalmag	=> undef
+ $printmag3	=> undef
+ $printngc3	=> undef
+ $printic3	=> undef
+ $printugc3	=> undef
+ $printpgc3	=> undef
+ $complex_form	=> undef
+</%ARGS>
+
+<%ONCE>
+</%ONCE>
+
+<%INIT>
+</%INIT>

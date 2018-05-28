@@ -1,0 +1,17 @@
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td><small>
+<input type=checkbox 
+name=printsl value="1" 
+% if ($printsl eq 1) {
+	checked 
+% }
+></small></td><td><small>Показывать зв.вел. с</small></td>
+<td><small><input type="text" name="slbr" value="<% sprintf("%5.2lf",$slbr) %>" size=5></small></td> 
+<td><small>по</small></td>
+<td><small><input type="text" name="slf"  value="<% sprintf("%5.2lf",$slf)  %>" size=5></small></td></tr></table>
+
+<%ARGS>
+ $printsl	=> undef
+ $slbr		=> undef
+ $slf		=> undef
+</%ARGS>

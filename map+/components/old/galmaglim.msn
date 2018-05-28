@@ -1,0 +1,9 @@
+brighter than:
+<input type="text" size="5" name="galmaglim" value="<% sprintf("%5.2lf",$galmaglim) %>">
+
+<%ARGS>
+ $galmaglim	=> undef
+</%ARGS>
+
+<%INIT>
+</%INIT>

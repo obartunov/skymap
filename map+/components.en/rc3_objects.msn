@@ -1,0 +1,118 @@
+%if ($nmatches>0) {
+<p>Galaxies near selected point
+%#<div align="center">
+<form name="rc3galaxies">
+<table border="0" cellspacing="1" cellpadding="2">
+<tr>
+<td bgcolor="#9999FF"></td>
+<td nowrap align="center" bgcolor="#BBBBFF">name</td>
+<td nowrap align="center" bgcolor="#BBBBFF">R.A.</td>
+<td nowrap align="center" bgcolor="#BBBBFF">Dec.</td>
+<td nowrap align="center" bgcolor="#BBBBFF">m</td>
+<td nowrap align="center" bgcolor="#BBBBFF">PA</td>
+<td nowrap align="center" bgcolor="#BBBBFF">a(')</td>
+<td nowrap align="center" bgcolor="#BBBBFF">b(')</td>
+<td nowrap align="center" bgcolor="#BBBBFF">name2</td>
+<td nowrap align="center" bgcolor="#BBBBFF">name3</td>
+<td nowrap align="center" bgcolor="#BBBBFF">name4</td>
+</tr>
+<%PERL>
+my ($delsign,
+	$alp_s,$del_s,
+	$alp_h,$alp_m,
+	$del_d,$del_m,
+	$alp_str,$del_str,
+	$alpout, $delout, $magout,$move_button);
+for (my $i=0; $i<$nmatches; $i++){
+	my $gal=$rc3sel->[$i];
+	$alpout=$gal->{ra};
+	$delout=abs($gal->{dec});
+	$magout=$gal->{mag};
+	$alp_h=int($alpout);
+	$alp_m=int(60*($alpout-int($alpout)));
+	$alp_s=60.0*((60*($alpout-int($alpout)))-int(60*($alpout-int($alpout))));
+
+	$delsign=($gal->{dec} >= 0.0)? '+' : '-';
+	$del_d=int($delout);
+	$del_m=int(60*($delout-int($delout)));
+	$del_s=60.0*((60*($delout-int($delout)))-int(60*($delout-int($delout))));
+
+	$alp_str=sprintf("%02d %02d %05.2f",$alp_h,$alp_m,$alp_s);
+	$del_str=$delsign.sprintf("%02d %02d %04.1f",$del_d,$del_m,$del_s);
+	
+	$move_button="<input type=button value=\" < \" onclick=\"move_coords($alpout,".$gal->{dec}.");\">";
+	$m->out("<tr>");
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#9999FF\">%s</td>",$move_button.add_obj_button($alp_str,$del_str,$gal->{p_name})));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$gal->{p_name}));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$alp_str));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$del_str));
+        if ($gal->{mag} != 0) {
+            $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.1f</td>\n",$magout));
+        } else {
+            $m->out("<td nowrap align=\"center\" bgcolor=\"#FAFAFA\">-</td>\n");
+	}
+        if ($gal->{fi} != 0) {
+            $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%d</td>\n",int(180.0*$gal->{fi}/$Pi) ));
+        } else {
+            $m->out("<td nowrap align=\"center\" bgcolor=\"#FAFAFA\">-</td>\n");
+	}
+        if ($gal->{Asize} != 0) {
+            $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.1f</td>\n",$gal->{Asize}));
+        } else {
+            $m->out("<td nowrap align=\"center\" bgcolor=\"#FAFAFA\">-</td>\n");
+	}
+        if ($gal->{Bsize} != 0) {
+            $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.1f</td>\n",$gal->{Bsize}));
+        } else {
+            $m->out("<td nowrap align=\"center\" bgcolor=\"#FAFAFA\">-</td>\n");
+	}
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$gal->{name2}));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$gal->{name3}));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$gal->{name4}));
+        $m->out("</tr>\n");
+
+}
+</%PERL>
+
+</table></form>
+%}
+%#</div>
+
+%if ($nmatches == 0) {
+<p>No RC3 objects found
+%}
+%if ((($nmatches % 10)==1)&&(($nmatches > 20)||($nmatches < 10))) {
+<p><%$nmatches%> object found
+%}
+%if (($nmatches % 10 >=2)&&($nmatches % 10 <=4)&&(($nmatches > 20)||($nmatches <10))) {
+<p><%$nmatches%> objects found
+%}
+%if (($nmatches % 10 >=5)||(($nmatches % 10 ==0)&&($nmatches >0))||(($nmatches<=19)&&($nmatches>=5))) {
+<p><%$nmatches%> objects found
+%}
+
+<%ARGS>
+ $ra		=> undef
+ $dec		=> undef
+ $z		=> undef
+ $galmaglim	=> undef
+ $supunkgal	=> undef
+ $SIZEX		=> undef
+</%ARGS>
+
+<%ONCE>
+sub add_obj_button {
+my ($alpha_s,$delta_s,$objname)=@_;
+my $res=sprintf("<input type=\"button\" value=\" + \" onclick=\"window.opener.add_to_list('%s %s %s\\n'); return false\">",
+           $alpha_s, $delta_s, $objname);
+return $res
+}
+</%ONCE>
+
+<%INIT>
+use SkyMap::GetNear;
+my $map=SkyMap::GetNear->new($ra,$dec,7.0,$galmaglim,$z,$SIZEX,$supunkgal);
+my $rc3sel=$map->select_rc3galaxies();
+my $nmatches=scalar @{$rc3sel};
+my $Pi=3.1415926535897932;
+</%INIT>

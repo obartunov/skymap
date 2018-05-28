@@ -1,0 +1,81 @@
+<script language="javascript">
+<!--
+function change_object(thevalue) {
+%foreach my $obj (@obj_order) {
+%if (($obj > 0)&&(${${$obj_params}{$obj}}[1] >= 0 )) {
+        if (thevalue==<%$obj%>) {
+                document.forma.telescope.options[last_tel].selected=true;
+                document.forma.fsdeg.value="<%int(${${$obj_params}{$obj}}[0])%>";
+                document.forma.fsmin.value="<%sprintf("%05.2f",60.0*(${${$obj_params}{$obj}}[0]-1.0*int(${${$obj_params}{$obj}}[0])))%>";
+                document.forma.maglim.value="<% int(7.0 - log(${${$obj_params}{$obj}}[0]/50.0)/log(2)) %>";
+
+<%PERL>
+my (    $alp_s,$del_s,
+        $alp_h,$alp_m,
+        $del_d,$del_m, $delsign,
+        $alpout, $delout, $del);
+
+	$del = ${${$obj_params}{$obj}}[2];
+        $alpout=${${$obj_params}{$obj}}[1];
+        $delout=abs($del);
+        $alp_h=int($alpout);
+        $alp_m=int(60*($alpout-int($alpout)));
+        $alp_s=60.0*((60*($alpout-int($alpout)))-int(60*($alpout-int($alpout))));
+
+        $delsign=($del >= 0.0)? '+' : '-';
+        $del_d=int($delout);
+        $del_m=int(60*($delout-int($delout)));
+        $del_s=60.0*((60*($delout-int($delout)))-int(60*($delout-int($delout))));
+
+</%PERL>
+
+                document.forma.alphah.value="<% $alp_h %>";
+                document.forma.alpham.value="<% $alp_m %>";
+                document.forma.alphas.value="<% $alp_s %>";
+
+                document.forma.deld.value="<% $delsign.$del_d %>";
+                document.forma.delm.value="<% $del_m %>";
+                document.forma.dels.value="<% $del_s %>";
+        }
+%}
+%}
+}
+//-->
+</script>
+
+<select name="objid" size="1" onChange="change_object(this.options[selectedIndex].value)" >
+%foreach my $obj (@obj_order) {
+%chomp $obj;
+%if (length($obj)>0) {
+<option value="<% $obj %>"
+%$m->out(" selected ") if ($obj==$objid);
+><% ${$obj_hash}{$obj}%>
+%}
+%}
+
+</select>
+
+%# $m->out(select_widget(
+%#	name  => 'objid', 
+%#	value => $objid,
+%#	list  => $obj_hash,
+%#	order => \@obj_order,
+%# ));
+
+<%ARGS>
+ $objid		=> -1
+</%ARGS>
+
+<%INIT>
+my $obj_hash={ -1 => "Additional objects" };
+my $obj_params={ -1 => [50,12,50]};
+open(FOBJ,"/usr/local/discovery/data/sky_objects")||return "";
+while (<FOBJ>){
+	chomp;
+	my @row = split /\t/;
+	${$obj_hash}{$row[0]} = $row[1] if ($row[2]==1);
+	push @{${$obj_params}{$row[0]}}, $row[3], $row[4], $row[5] if ($row[2]==1);
+}
+close(FOBJ);
+my @obj_order = sort {$a <=> $b} keys %{$obj_hash};
+</%INIT>

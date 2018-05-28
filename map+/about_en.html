@@ -1,0 +1,23 @@
+<& /includes/title.msn, title=>'Astronet > Sky Map, professional edition' &>
+<& /includes/header.msn, top100_id=>$top100_id  &>
+<p>
+<h3 align="center"><a href="<%build_link("build://www.astronet.ru/db/map/")%>">Sky Map Online</a>&nbsp;|&nbsp;Professional edition</h3>
+<P>
+<div align="center">
+<a href="index_en.html">Simple form</a>&nbsp;|&nbsp;<a href="index_en.html?complex_form=1">Advanced form</a>&nbsp;|&nbsp;About&nbsp;|&nbsp;<a href="./">Русская версия</a>
+</div>
+<blockquote>
+<& components.en/about.msn &>
+</blockquote>
+
+<& /includes/footer.msn, top100_id=>$top100_id, rffi => 1  &>
+
+<%ARGS>
+</%ARGS>
+
+<%ONCE>
+ my $top100_id = 212444;
+</%ONCE>
+
+<%INIT>
+</%INIT>

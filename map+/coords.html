@@ -1,0 +1,221 @@
+<html>
+<title>Координатное окно</title>
+<head>
+<script>
+<!--
+var i=0;
+function move_coords(alpha,delta)
+{
+	var alpha_h,alpha_m,alpha_s;
+	var delta_sign,delta_d,deltam_sign,delta_m,delta_s;
+	var delta_a;
+	alpha_h=Math.floor(alpha);
+	alpha_m=Math.floor(60.0*(alpha-alpha_h));
+	alpha_s=0.01*Math.round(360000.0*(alpha-alpha_h-alpha_m/60.0));
+	if (delta>=0) delta_sign="+";
+	else delta_sign="-";
+	if ((delta<0)&&(delta>-1)) deltam_sign="-";
+	else deltam_sign="";
+	delta_a=Math.abs(delta);
+	delta_d=Math.floor(delta_a);
+	delta_m=Math.floor(60.0*(delta_a-delta_d));
+	delta_s=0.1*Math.round(36000.0*(delta_a-delta_d-delta_m/60.0));
+
+	window.opener.document.forma.alphah.value=alpha_h;
+	window.opener.document.forma.alpham.value=alpha_m;
+	window.opener.document.forma.alphas.value=alpha_s;
+	window.opener.document.forma.deld.value=delta_sign+delta_d;
+	window.opener.document.forma.delm.value=deltam_sign+delta_m;
+	window.opener.document.forma.dels.value=delta_s;
+
+	if (document.form_move.redraw.checked == true) window.opener.document.forma.submit.click();
+
+	return false;
+}
+function add_to_list(theform)
+{
+	window.opener.add_to_list("<% $alpha_string." ".$delta_string." Object0" %>"+"\n");
+	return false;
+}
+//-->
+</script>
+</head>
+<body bgcolor="#9999FF">
+<center>
+<form name="form_move">
+<b>Подсказка</b>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td><input type="button" value=" &lt; "></td><td nowrap> - центровка карты по выбранным координатам</td></tr>
+<tr><td><input type="button" value=" + "></td><td nowrap> - добавление объекта в список на подпись</td></tr>
+</table><br>
+<b>Координаты выбранной точки</b>
+<table border="0" cellspacing="1" cellpadding="0">
+<tr><td bgcolor="#9999FF"></td><td nowrap align="center" bgcolor="#BBBBFF"><small>R.A.(J2000):</small></td>
+<td nowrap align="center" bgcolor="#BBBBFF"><small>Dec.(J2000):</small></td></tr>
+<tr><td nowrap bgcolor="#9999FF"><small>
+<input type=button value=" < " onclick="move_coords(<%$alpha1%>,<%$delta1%>);"><input type=button value=" + " onclick="add_to_list(this.form);"></small></td>
+<td nowrap align="center" bgcolor="#FAFAFA"><small><b><%$alpha_string%></b><small></td>
+<td nowrap align="center" bgcolor="#FAFAFA"><small><b><%$delta_string%></b></small></td></tr>
+<tr><td colspan=3 nowrap><input type="checkbox" name="redraw" value="1">Перерисовывать карту при центровке</td></tr>
+</table>
+</center>
+<& components/rc3_objects.msn,
+	ra		=> $alpha1,
+	dec		=> $delta1,
+	z		=> $z,
+	galmaglim	=> $galmaglim,
+	SIZEX		=> $xsize,
+	supunkgal	=> $supgalmag
+&>
+<& components/tycho_stars.msn,
+	ra		=> $alpha1,
+	dec		=> $delta1,
+	z		=> $z,
+	maglim		=> $maglim,
+	SIZEX		=> $xsize,
+&>
+<& components/a20_stars.msn,
+	ra		=> $alpha1,
+	dec		=> $delta1,
+	z		=> $z,
+	maglim		=> $maglim,
+	SIZEX		=> $xsize,
+&>
+<p align="center"><input type="button" value="Закрыть окно" onclick="window.close(this.window)"></p>
+</form>
+</body></html>
+
+<%ARGS>
+ $mode		=> 2
+ $a		=> 0
+ $d		=> 0
+ $z		=> 1.0
+ $maglim	=> undef
+ $galmaglim	=> undef
+ $supgalmag	=> undef
+ $xsize		=> undef
+ $mirrorx	=> 0
+ $mirrory	=> 0
+</%ARGS>
+
+<%ONCE>
+ my $PI=3.1415926535897932;
+ sub arccos
+ {
+    my $xx=shift;
+    my $alpha=atan2(sqrt(-1+1/($xx*$xx)),1);
+    if ($alpha<0) {$alpha+=$PI;}
+    if ($alpha>$PI) {$alpha-=$PI;}
+    return $alpha;
+ }
+ sub sqr
+ {
+    my $xx=shift;
+    return $xx*$xx;
+ }
+</%ONCE>
+
+<%INIT>
+    my $yc;
+    my $delta1;
+    my $alpha1;
+    my ($dtempint,$rmain,$imzoom);
+    my $x = (!exists $ARGS{'point.x'} ? 0 : $ARGS{'point.x'});
+    my $y = (!exists $ARGS{'point.y'} ? 0 : $ARGS{'point.y'});
+
+    $x=$xsize-$x if ($mirrorx == 1);
+    $y=3.0*$xsize/4.0-$y if ($mirrory == 1);
+    if ($d>90) {$d=90;}
+    if ($d<-90) {$d=-90;}
+    $dtempint=2.*$z;
+    if (($dtempint<20)&&($dtempint>0)) {$dtempint=20; }
+    $imzoom = $xsize/1280.0;
+
+    if ($d>=-90 and $d<=(-90+(30.0/$z)))
+       {
+           $yc = 480*$imzoom + 17.0*$z*$imzoom*(90+$d);
+           $delta1 = -90 + sqrt(sqr(640*$imzoom-$x)+sqr($yc-$y))/(17*$imzoom*$z);
+           if ($delta1>-90) {
+               if ($y!=480*$imzoom) {
+                   if ($x<=640*$imzoom) {
+                       $alpha1 = 12*arccos(($yc-$y)/sqrt(sqr(640*$imzoom-$x)+sqr($yc-$y)))/$PI+$a}
+                   else { $alpha1 = 24+$a-12*arccos(($yc-$y)/sqrt(sqr(640*$imzoom-$x)+sqr($yc-$y)))/$PI;}}}
+           if ($y>$yc) {$alpha1=2*$a+12-$alpha1;}
+           if ($alpha1 < 0 ) { $alpha1 = $alpha1 + 24;}
+           if ($alpha1>=24 ) { $alpha1 = $alpha1 - 24;}
+       }
+    #if ($d>-(30/$z) and $d<-$dtempint)
+    if ($d>(-90+(30/$z)) and $d<-$dtempint)
+        ###-ALL RIGHT-###
+    {
+        $rmain = abs((90+$d)*17*$imzoom*$z/sin($PI*$d/180));
+        $yc = 480*$imzoom+$rmain;
+
+        if ($x<=640*$imzoom)
+        {$alpha1 = $a+180*(arccos(($yc-$y)/sqrt(sqr(640*$imzoom-$x)+
+                                                   sqr($yc-$y))))/($PI*15*sin(-$PI*$d/180))}
+        else
+        {$alpha1 = $a+24-180*arccos(($yc-$y)/sqrt(sqr(640*$imzoom-$x)+
+                                                     sqr($yc-$y)))/($PI*15*sin(-$PI*$d/180));}
+        if ($alpha1 < 0 ) {$alpha1 = $alpha1 + 24;}
+        if ($alpha1>=24 ) {$alpha1 = $alpha1 - 24;}
+        $delta1 = $d+(sqrt(sqr($x-640*$imzoom)+sqr($yc-$y))-$rmain)/(17*$imzoom*$z);
+    }
+    if ($d>=-$dtempint and $d<=$dtempint)
+        ###-ALL RIGHT-###
+    {  $alpha1 = $a+(641*$imzoom-$x)/(256*$imzoom*$z*cos($PI*$d/180.));
+        if ($alpha1<0 ) {$alpha1 = $alpha1 + 24;}
+    if ($alpha1>24) {$alpha1 = $alpha1 - 24;}
+    $delta1 = ($imzoom*480+17*$imzoom*$z*$d-$y)/(17*$imzoom*$z);
+    }
+    #if ($d>$dtempint and $d<(30/$z))
+    if ($d>$dtempint and $d<(90-(30/$z)))
+        ###-ALL RIGHT-###
+    {
+        $rmain = (90-$d)*17*$imzoom*$z/sin($PI*$d/180);
+        $yc = 480*$imzoom-$rmain;
+        $delta1 = $d - (sqrt(sqr($x-640*$imzoom)+sqr($y-$yc))-$rmain)/(17*$imzoom*$z);
+        if ($delta1 <90)
+        {
+            if ($x<=640*$imzoom)
+            { $alpha1 = $a+180*(arccos(($y-$yc)/sqrt(sqr(640*$imzoom-$x)+sqr($y-$yc))))/($PI*15*sin($PI*$d/180));}
+            else { $alpha1 = $a+24-180*arccos(($y-$yc)/sqrt(sqr(640*$imzoom-$x)+sqr($y-$yc)))/($PI*15*sin($PI*$d/180)); }
+            #            { $alpha1 = $a+180*(arccos(($y-$yc)/sqrt(sqr(640*$imzoom-$x)+sqr($y-$yc))))/($PI*15*sin($d));}
+            #            else { $alpha1 = $a+24-180*arccos(($y-$yc)/sqrt(sqr(640*$imzoom-$x)+sqr($y-$yc)))/($PI*15*sin($d)); }
+            if ($alpha1 < 0) { $alpha1 = $alpha1 + 24;}
+            if ($alpha1>=24) { $alpha1 = $alpha1 - 24;}
+            #            $delta1 = $d - (sqrt(sqr($x-640*$imzoom)+sqr($y+180))-480*$imzoom*$z)/17*$imzoom*$z;
+        }
+    }
+    #if ($d>=(30/$z) and $d<=90)
+    if ($d>=(90-(30/$z)) and $d<=90)
+    {
+        $yc = 480*$imzoom - 17.0*$z*$imzoom*(90-$d);
+        $delta1 = 90 - sqrt(sqr(640*$imzoom-$x)+sqr($yc-$y))/($z*$imzoom*17);
+        if ( $delta1<90){
+            #        if ($y!=480*$imzoom) {
+            if ($y!=$yc) {
+                if ($x<=640*$imzoom)
+                {$alpha1 = $a+12*arccos(($y-$yc)/sqrt(sqr(640*$imzoom-$x)+sqr($yc-$y)))/$PI}
+                else
+                {$alpha1 = 24-12*arccos(($y-$yc)/sqrt(sqr(640*$imzoom-$x)+sqr($yc-$y)))/$PI+$a;}}}
+        if ($y<$yc) {$alpha1=2*$a+12-$alpha1;}
+        #    if (($y<$yc) and ($x<=640*$imzoom)) {$alpha1=6-$alpha1;}
+        #    if (($y<$yc) and ($x>640*$imzoom)) {$alpha1=12-$alpha1;}
+        if ($alpha1 < 0 ) { $alpha1 = $alpha1 + 24;}
+        if ($alpha1>=24 ) { $alpha1 = $alpha1 - 24;}
+    }
+
+    my $alpha_h=int($alpha1);
+    my $alpha_m=int(60.0*($alpha1-int($alpha1)));
+    my $alpha_s=sprintf("%5.2f",(60*(60*($alpha1-int($alpha1))-int(60*($alpha1-int($alpha1))))));
+    my $delta2=abs($delta1);
+    my $delta_d=int($delta2);
+    my $delta_m=int(int(60.0*($delta2-int($delta2))));
+    my $delta_s=sprintf("%4.1f",60*(abs(60*($delta2-int($delta2)))-abs(int(60*($delta2-int($delta2))))));
+    my $delta_sign=($delta1<0)? '-' : '+';
+    my $deltam_sign=(($delta1>-1)&&($delta1<0))? "-" : "";
+    my $alpha_string=sprintf("%02d %02d %05.2f",$alpha_h,$alpha_m,$alpha_s);
+    my $delta_string=$delta_sign.sprintf("%02d %02d %04.1f",$delta_d,$delta_m,$delta_s);
+
+</%INIT>

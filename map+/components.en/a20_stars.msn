@@ -1,0 +1,91 @@
+%if ($nmatches > 0) {
+<p>USNO A2.0 objects near selected point
+%#<div align="center">
+
+<form name="a20stars"><table border="0" cellspacing="1" cellpadding="2">
+<tr>
+<td bgcolor="#9999FF"></td>
+<td nowrap align="center" bgcolor="#BBBBFF">R.A.</td>
+<td nowrap align="center" bgcolor="#BBBBFF">Dec.</td>
+<td nowrap align="center" bgcolor="#BBBBFF">B</td>
+<td nowrap align="center" bgcolor="#BBBBFF">R</td>
+</tr>
+
+<%PERL>
+my ($delsign,
+	$alp_s,$del_s,
+	$alp_h,$alp_m,
+	$del_d,$del_m,
+	$alp_str,$del_str, $mag_str,
+	$alpout, $delout, $magout, $rmagout, $move_button);
+for (my $i=0; $i<$nmatches; $i++){
+	my $a20_star=$a20sel->[$i];
+	$alpout=$a20_star->{ra};
+	$delout=abs($a20_star->{dec});
+	$magout=$a20_star->{mag};
+	$rmagout=$a20_star->{rmag}/10.0;
+	$alp_h=int($alpout);
+	$alp_m=int(60*($alpout-int($alpout)));
+	$alp_s=60.0*((60*($alpout-int($alpout)))-int(60*($alpout-int($alpout))));
+
+	$delsign=($a20_star->{dec} >= 0.0)? '+' : '-';
+	$del_d=int($delout);
+	$del_m=int(60*($delout-int($delout)));
+	$del_s=60.0*((60*($delout-int($delout)))-int(60*($delout-int($delout))));
+
+	$alp_str=sprintf("%02d %02d %05.2f",$alp_h,$alp_m,$alp_s);
+	$del_str=$delsign.sprintf("%02d %02d %04.1f",$del_d,$del_m,$del_s);
+	$mag_str=sprintf("B=%d,%03d",int($magout),abs(int(1000.0*($magout-int($magout)))));
+
+	$move_button="<input type=button value=\" < \" onclick=\"move_coords($alpout,".$a20_star->{dec}.");\">";
+        $m->out(sprintf("<tr><td nowrap align=\"right\" bgcolor=\"#9999FF\">%s</td>",$move_button.add_obj_button($alp_str,$del_str,$mag_str)));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$alp_str));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$del_str));
+	$m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.3f</td>\n",$magout));
+	$m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.3f</td>\n",$rmagout));
+        $m->out("</tr>\n");
+
+}
+</%PERL>
+
+</table></form>
+%#</div>
+%}
+
+%if ($nmatches == 0) {
+<p>No USNO A2.0 objects found
+%}
+%if ((($nmatches % 10)==1)&&(($nmatches > 20)||($nmatches < 10))) {
+<p><%$nmatches%> object found
+%}
+%if (($nmatches % 10 >=2)&&($nmatches % 10 <=4)&&(($nmatches > 20)||($nmatches <10))) {
+<p><%$nmatches%> objects found
+%}
+%if (($nmatches % 10 >=5)||(($nmatches % 10 ==0)&&($nmatches >0))||(($nmatches<=19)&&($nmatches>=5))) {
+<p><%$nmatches%> objects found
+%}
+
+<%ARGS>
+ $ra		=> undef
+ $dec		=> undef
+ $z		=> undef
+ $maglim	=> undef
+ $SIZEX		=> undef
+</%ARGS>
+
+<%ONCE>
+sub add_obj_button {
+my ($alpha_s,$delta_s,$objname)=@_;
+my $res=sprintf("<input type=\"button\" value=\" + \" onclick=\"window.opener.add_to_list('%s %s %s\\n'); return false\">",
+           $alpha_s, $delta_s, $objname);
+return $res
+}
+</%ONCE>
+
+<%INIT>
+use SkyMap::GetNear;
+my $map=SkyMap::GetNear->new($ra,$dec,$maglim,12.0,$z,$SIZEX,1);
+my $a20sel=$map->select_a20stars();
+my $nmatches=scalar @{$a20sel};
+my $Pi=3.1415926535897932;
+</%INIT>

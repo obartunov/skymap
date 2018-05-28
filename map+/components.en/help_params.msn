@@ -1,0 +1,149 @@
+<table align="center" border="0" width="95%" cellspacing="0" cellpadding="1" bgcolor="#9999ff">
+<tr><td align="left">
+<b><font size="3">
+&nbsp;Help
+</font></b>
+</td></tr>
+</table>
+<small>
+<dl>
+<dt><p><b>Form elements:</b></p></dt>
+<dt>General options:</dt>
+<ul>
+ <li>Instrument: Use this to select the optical instrument to create map for.
+     Selection of any value from this menu except "Another telescope" will cause
+     the value changing in the "Field size" and "Stars->Magnitude limit" form
+     entries. These values will be set for creating identification map for the
+     corresponding telescope. For large telescopes (2.6m and 6m) the usable 
+     value for guiding star selections will be set. It exceeds field sizes of
+     these telescopes by the factor of 3 or 4.
+ </li>
+ <li>Field center (R.A. and Dec.): using these options you may set the map 
+     center position. If you click on the map, the additional window will appear
+     ("Coordinate window") with the values of click coordinates and descriptions
+     of the objects near this point. You may copy the coordinates to the main form
+     by pressing the "&lt;" button.
+ </li>
+ <li>Map size: the approximate size of the map in pixels.
+     Selected values are not exactly the same, as the real size of the map.
+     Map size for printable version will correspond to A4 size if this parameter
+     is less than 2560x1920 and A2 in the other case.
+ </li>
+ <li>Field size: the approximate size of the map in the Y direction.
+X size exceeds it in 33%.
+</li>
+%if ($complex_form == 1) {
+ <li>Constallation boundaries: turning on this option will cause constellation
+     boundaries to be plotted.
+ </li>
+ <li>Grids: turning on this option will cause equatorial coordinate grid to
+     be plotted.
+ </li>
+ <li>Cell size: these options let you manually set the coordinate grid cell sizes.
+ </li>
+ <li>X and Y Flip: These flags let you get the flipped map, what is usable 
+as for visual observations with telescopes, as for identifying the images from
+different telescopes, which may have any orientation depending on the optical
+system.
+ </li>
+%}
+</ul>
+
+<dt>Stars:</dt>
+<ul>
+ <li>Magnitude limit: this parameter set tha value of magnitude limit for
+     stars on the map. In the current realization of the map, the USNO A2.0 and
+     TYCHO catalogs are used, what lets to display the stars brighter than 21-st
+     stellar magnitude.
+ </li>
+%if ($complex_form == 1) {
+ <li>Print stellar magnitudes: if you turn on this parameter, the stellar
+     magnitudes will be printed near the stars of the corresponding magnitude range.
+ </li>
+%}
+</ul>
+
+<dt>Galaxies:</dt>
+<ul>
+ <li>Galaxies: this flag turn on the RC3 galaxy displaying on the map.
+    Galaxies, which size exceeds some value depending on the field and map 
+    sizes, are displayed with their real positional angles and sizes by 25m
+    isophote. Other galaxies are displayed as standard-size ellipses.
+ </li>
+ <li>Magnitude limit: this parameter set tha value of magnitude limit for
+     galaxies on the map.
+ </li>
+ <li>Only if mag. is known: turning this flag on will suppress galaxies with 
+     unknown brightness.
+ </li>
+ <li>Print stellar magnitudes: if you turn on this parameter, the stellar
+     magnitudes without decimal point will be printed near the galaxies
+ </li>
+ <li>Print principal designations: this flag will cause the printing of 
+     principal designations of RC3 galaxies. Designations are placed in the
+     following order: NGC-&gt;IC-&gt;UGC-&gt;PGC
+ </li>
+% if ($complex_form==1) {
+ <li>Additional designations 1,2,3 - setting these flag will cause the
+     printing of additional designations of RC3 galaxies according to the
+     previously written order.
+ </li>
+% }
+</ul>
+<p><li>Plot the map - the map will be plotted after pressing this button</li></p>
+% if ($complex_form==1) {
+<p><li>Simple form - use this button for switching to the simple type interface
+with saving all the parameter values.
+</li></p>
+% } else {
+<p><li>Advanced form - use this button for switching to the advanced interface
+will full set of options with saving all the parameter values.
+</li></p>
+% }
+<p><li>Printable version - use this link for getting printable copy of the 
+map in the PDF format. For viewing and printing this map you should install
+<a href="http://www.adobe.com/products/acrobat/readermain.html">
+Adobe Acrobat Reader</a> 3.0 or newer.
+</li></p>
+
+<dt><p><b>Working with the map in the interactive mode:</b></p></dt>
+<ul>
+ <li>Program has the minimal set of possibilities for the intaractive work
+through the WEB-browser. If you click on the map, the additional window will appear
+     ("Coordinate window") with the values of click coordinates and descriptions
+     of the objects near this point. You may copy the coordinates to the main form
+     by pressing the "&lt;" button.
+ </li>
+ <li>Buttons with "+" sign are intended to add the coordinated to the "mark list"
+     In that case for the galaxies the program proposes principal designation as 
+     the label, for TYCHO stars V magnitude is used, for USNO A2.0 stars the
+     R magnitude is used.
+     <i>Object will be marked with light-green color on the map and with "-" sign
+     near the magnitude values, if there is a note about bad quality of the
+     magnitude measurement in the USNO A2.0 catalogue</i>
+ </li>
+</ul>
+<dt><p><b>Object marking</b></p></dt>
+<ul>
+ <li>To create the labels for the objects on the map, you should open the
+     window for it using "Mark the objects" link above the map. In the
+     textarea in this window it is possible to enter coordinates and 
+     designations manually or using "+" buttons in the "coordinate window".
+     Objects descriptions should be entered in the following format:
+<pre>
+R.A.(J2000) Dec.(J2000)
+HH MM SS.S +DD MM SS.S Designation
+</pre>For example,<pre>
+11 03 43.83 +61 45 04.0 Dubhe
+</pre>
+ </li>
+</ul>
+</dl>
+</small>
+
+<%ARGS>
+ $complex_form	=> undef
+</%ARGS>
+
+<%INIT>
+</%INIT>

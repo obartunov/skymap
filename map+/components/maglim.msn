@@ -1,0 +1,13 @@
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td nowrap><small>Предельная звездная величина: </small></td><td nowrap><small>
+<input type="text" size="5" name="maglim" value="<% sprintf("%5.2f",$maglim) %>"
+ onchange="if (telescope.options[last_tel].selected==false) {
+	telescope.options[last_tel].selected = true;
+}"></small></td></tr></table>
+
+<%ARGS>
+ $maglim	=> 7.0
+</%ARGS>
+
+<%INIT>
+</%INIT>

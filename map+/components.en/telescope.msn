@@ -1,0 +1,52 @@
+<script language="javascript">
+<!--
+function change_telescope(thevalue) {
+%foreach my $tel (@tel_order) {
+%if ($tel < 1000) {
+	if (thevalue==<%$tel%>) {
+		document.forma.fsdeg.value="<%int($$tel_desc{$tel}{field})%>";
+		document.forma.fsmin.value="<%sprintf("%05.2f",60.0*($$tel_desc{$tel}{field}-1.0*int($$tel_desc{$tel}{field})))%>";
+		document.forma.maglim.value="<%int($$tel_desc{$tel}{maglim})%>";
+	}
+%}
+%}
+}
+//-->
+</script>
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td nowrap width="100%"><small>Instrument</small></td></tr>
+<tr><td nowrap width="100%">
+<select name="telescope" size="1" onChange="change_telescope(this.options[selectedIndex].value)" >
+%foreach my $tel (@tel_order) {
+%chomp $tel;
+%if (length($tel)>0) {
+<option value="<% $tel %>"
+%$m->out(" selected ") if ($tel==$telescope);
+><% $telescopes{$tel}%>
+%}
+%}
+
+%# $m->out(select_widget(
+%#	name	=> 'telescope',
+%#	value	=> $telescope,
+%#	list	=> \%telescopes,
+%#	order	=> \@tel_order
+%# ));
+
+</select>
+</td></tr></table>
+
+<%ARGS>
+ $telescope	=> 0
+ $tel_desc	=> undef
+</%ARGS>
+
+<%INIT>
+my %telescopes;
+$telescope ||= 0;
+my @tel_order = sort {$a <=> $b} keys %{$tel_desc};
+foreach my $tel ( @tel_order ) {
+	$telescopes{$tel} = $$tel_desc{$tel}{name};
+}
+</%INIT>

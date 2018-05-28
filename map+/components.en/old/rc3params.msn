@@ -1,0 +1,58 @@
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td width="5%"><font size="-1"><input type=checkbox 
+name=rc3disp value="1" 
+% if ($rc3disp eq 1) {
+	checked 
+% }
+></font></td><td width="95%" colspan="3"><small>Display RC3 galaxies 
+<& galmaglim.msn, galmaglim => $galmaglim  &></td></tr>
+<tr><td width="5%"><font size="-1"><input type=checkbox 
+name=supgalmag value="1" 
+% if ($supgalmag eq 1) {
+	checked 
+% }
+></font></td><td width="45%"><font size="-1">Only with known mag.</font></td>
+<td width="5%"><font size="-1"><input type=checkbox 
+name=printmag3 value="1"
+% if ($printmag3 eq 1) {
+	checked 
+% }
+></font></td><td width="45%"><font size="-1">Print *mag</font></td></tr>
+<tr><td width="5%"><font size="-1"><input type=checkbox
+name=printngc3 value="1" 
+% if ($printngc3 eq 1) {
+	checked 
+% }
+></font></td><td width="45%"><font size="-1">Print NGC#</font></td>
+<td width="5%"><font size="-1"><input type=checkbox 
+name=printic3 value="1"
+% if ($printic3 eq 1) {
+	checked 
+% }
+></font></td><td width="45%"><font size="-1">Print IC#</font></td></tr>
+<tr><td width="5%"><font size="-1"><input type=checkbox 
+name=printugc3 value="1" 
+% if ($printugc3 eq 1) {
+	checked 
+% }
+></font></td><td width="45%"><font size="-1">Print UGC#</font></td>
+<td width="5%"><font size="-1"><input type=checkbox 
+name=printpgc3 value="1"
+% if ($printpgc3 eq 1) {
+	checked 
+% }
+></font></td><td width="45%"><font size="-1">Print PGC#</font></td></tr></table>
+
+<%ARGS>
+ $rc3disp	=> undef
+ $galmaglim	=> undef
+ $supgalmag	=> undef
+ $printmag3	=> undef
+ $printngc3	=> undef
+ $printic3	=> undef
+ $printugc3	=> undef
+ $printpgc3	=> undef
+</%ARGS>
+
+<%INIT>
+</%INIT>

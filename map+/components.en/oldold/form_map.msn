@@ -1,0 +1,82 @@
+<table border="0" cellspacing="1" cellpadding="0" width="100%" bgcolor="#9999ff">
+ <tr><td width="65%" colspan="2">
+ <table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr><td width="100%" colspan="3"><b>Параметры карты:</b></td></tr>
+  <tr><td width="32%"><& fsize.msn, fsdeg => $fsdeg, fsmin => $fsmin &></td>
+  <td rowspan="2" width="15%">
+  <& coord.msn, 
+   alphah =>$alphah,
+   alpham =>$alpham,
+   alphas =>$alphas,
+   deld =>$deld,
+   delm =>$delm,
+   dels =>$dels,
+  &></td><td rowspan="2" width="53%">
+  <& map_params.msn, dcbnd =>$dcbnd, dgrids =>$dgrids, xcs =>$xcs, ycs =>$ycs &>
+  </td></tr><tr>
+  <td><table border="0" cellspacing="0" cellpadding="0" width="100%">
+   <tr><td><small>Размер карты:</small></td><td><& map_size.msn, xsize => $xsize &></td></tr></table></td></tr>
+  </table></td>
+ <td width="35%" rowspan="2"><table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr><td><b>RC3 галактики:</b></td></tr>
+  <tr><td><& rc3params.msn,
+   rc3disp       => $rc3disp,
+   galmaglim     => $galmaglim,
+   supgalmag     => $supgalmag,
+   printmag3     => $printmag3,
+   printngc3     => $printngc3,
+   printic3      => $printic3,
+   printugc3     => $printugc3,
+   printpgc3     => $printpgc3
+  &></td></tr>
+ </table></td></tr>
+ <tr><td><table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr><td colspan="2"><b>Звезды:<b></td></tr>
+  <tr><td>
+  <& maglim.msn, maglim => $maglim &>
+  </td><td>
+  <& starlabels.msn, printsl =>$printsl, slbr =>$slbr, slf =>$slf &>
+  </td></tr>
+ </table></td><td align="center" valign="center">
+  <input type="submit" name="submit" value="<%$submit%>">
+  <input type="submit" name="pdfsub" value="PDF">
+  <input type="submit" name="help" value="Help">
+  <input type="submit" name="simple_form" value="Пр.ф.">
+ </td></tr>
+<tr></tr>
+</table>
+
+<%ARGS>
+ $fsdeg         => undef
+ $fsmin         => undef
+ $xsize         => undef
+ $alphah        => undef
+ $alpham        => undef
+ $alphas        => undef
+ $deld          => undef
+ $delm          => undef
+ $dels          => undef
+ $dgrids        => undef
+ $dcbnd         => undef
+ $xcs           => undef
+ $ycs           => undef
+ $maglim        => undef
+ $printsl       => undef
+ $slbr          => undef
+ $slf           => undef
+ $galmaglim     => undef
+ $rc3disp       => undef
+ $supgalmag     => undef
+ $printmag3     => undef
+ $printngc3     => undef
+ $printic3      => undef
+ $printugc3     => undef
+ $printpgc3     => undef
+ $mode          => undef
+ $submit	=> 'Plot'
+ $pdfsub	=> undef
+ $help		=> undef
+</%ARGS>
+
+<%INIT>
+</%INIT>

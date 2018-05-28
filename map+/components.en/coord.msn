@@ -1,0 +1,33 @@
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td nowrap colspan=4 align="center"><small>Field center</small></td></tr>
+<tr><td nowrap>
+<small>
+R.A.:</small></td>
+<td nowrap>
+<small><input type="text" name="alphah" value=<% $alphah %> width=3 size=3></td>
+<td nowrap align="left">
+<small><input type="text" name="alpham" value=<% $alpham %> width=2 size=2></td>
+<td nowrap align="left">
+<small><input type="text" name="alphas" value=<% sprintf("%5.2f",$alphas) %> width=5 size=5></td></tr>
+<tr>
+<td nowrap>
+<small>Dec:</small></td>
+<td nowrap>
+<small><input type="text" name="deld"  value=<% $deld  %> width=3 size=3></td>
+<td nowrap>
+<small><input type="text" name="delm"  value=<% $delm  %> width=2 size=2></td>
+<td nowrap align="left">
+<small><input type="text" name="dels"  value=<% sprintf("%5.2f",$dels)  %> width=5 size=5>
+</td></tr></table>
+
+<%ARGS>
+ $alphah	=> 0
+ $alpham	=> 0
+ $alphas	=> 0
+ $deld		=> 0
+ $delm		=> 0
+ $dels		=> 0
+</%ARGS>
+
+<%INIT>
+</%INIT>

@@ -1,0 +1,12 @@
+
+Since the writing of the EGRET, our system has grown a lot.  egretc
+creates the flex rules. With the restrictive size limit of rules that 
+flex can deal with, we had to split the micro-db into seven different 
+files and create seven different programs to do the name resolution.  
+There is a main program and six others. The main program used fork and 
+exec to start the other six programs and communicate with each of them 
+through pipes.  The main program tries to resolve the name first. If 
+it fails, it will pass the name in turn to the other six programs until 
+it is resolved.
+
+The code in this package is only the basic stuff. 

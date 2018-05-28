@@ -1,0 +1,106 @@
+<table align="center" border="0" width="95%" cellspacing="0" cellpadding="1" bgcolor="#9999ff">
+<tr><td align="left">
+<b><font size="3">
+&nbsp;About the Sky Map Online, professional edition
+</font></b>
+</td></tr>
+</table>
+<small>
+<dl>
+<dt>The professional version of the <a href="<% build_link("build://www.astronet.ru/db/map/") %>">Sky Map Online</a>
+ was reflected as the tool for amateure astronomers and for professional astronomers
+ It provides the creation of maps with the magnitude limit for stars up to 21-st
+ magnitude (limit of the First POSS) and field size from several arcmins to
+ 80 by 60 degrees, what makes possible to use it for the following goals:</dt>
+<ul>
+ <li>Creation of pointing maps and preliminary star field identifying on the
+     telescopes of any size. Guiding stars selection. Palomar Observatory Sky
+     Survey map usage, what is widely used for such goals all over the world,
+     is not always a good solution, especially if you need to identify rich
+     field on the TV-camera view on the large telescope, where the magnitude
+     limit is about 17th-18th. USNO A2.0 contains an information about the bad
+     quality of stellar magnitude measurement for some objects, which usually
+     (when you are not near the Milky Way) specifies a galaxy or some kind of
+     nebula. Such objects are not recommended to use as guiding stars.
+ </li>
+ <li>Creation of maps for identifying of photographic plates from small
+     astrographs (less than 1 meter in the diameter) or CCD-images from small
+     telescopes. It may be hard to identify such images with POSS maps, if
+     the magnitude limit on them is less than 17-th magnitude. Using this
+     program you are able to select magnitude limit for stars, what will
+     suppress stars fainter than your limit.
+ </li>
+ <li>Creation of "maps of background stars", which are usable for the amateur
+astronomers to make drawings of different types of deep-sky objects.
+ </li>
+</ul>
+<dt>The main advantage of this Internet-version with a comparison to the
+widely used astronomical software is the fast creation of the map of any part
+of the sky with any magnitude limit, what is hard to realize on PC because
+of distribution problems of such amount of data (data size is about 7 
+Gigabytes). One more advantage is possibility of individual object labelling
+and adding from the WEB-browser.</dt>
+<dt><p><b>The data used in the project</b></p></dt>
+<ul>
+ <li>Combination of 2 catalogs of stars: TYCHO and USNO A2.0.
+    The USNO A2.0 catalogue has very poor quality of both astrometrical and
+    photometrical data for stars brighter than 10-th stellar magnitude, which
+    is compensated by TYCHO catalogue, which is almost full up to 10.5 in the
+    V filter, and contains more then million of stars up to 12.5 magnitude 
+    with high precision coordinates and photometry in B and V bands.
+    The USNO A2.0 is used only if you specify magnitude limit deeper than
+    10.5 and field size less than 10 degrees.
+ </li>
+ <li>RC3 catalogue of galaxies. The program is able to display RC3 galaxies
+    on the maps. RC3 catalogues includes information about 23000 objects.
+    Galaxies, which large axis exceeds 4 pixels in the scale of the map
+    are displayed with their real positional angles and sizes by 25m
+    isophote. Other galaxies are displayed as standard-size 5x8 pixels
+    ellipses. In the nearest future LEDA database, which contains information
+    about approximately 1.3 millions of objects will be used in the sky map.
+ </li>
+</ul>
+<dt><p><b>Main features of the program</b></p></dt>
+<ul>
+ <li>Displaying of about 530 millions of stars up to 21-st stellar magnitude,
+contained in the USNO A2.0 and TYCHO catalogues and 23023 galaxies up to 18-th
+integral stellar magnitude from RC3 catalogue.
+ </li>
+ <li>Identification of any object on the map after mouse click on it with
+     a possibility of adding its description to the mark list.
+ </li>
+ <li>Labelling of the any objects on the map, new objects adding from the 
+WEB-form.
+ </li>
+ <li>Printable copy creation in PDF format. This feature provide the map
+creation in the vector PDF format, which can be scaled without quality
+loosing and edited using the corresponding software (Adobe Acrobat).
+It is hardly recommended to use <a
+href="http://www.adobe.com/products/acrobat/readermain.html">Adobe 
+Acrobat Reader</a> v3.0 or higher for viewing and printing of Sky Map PDF
+files. This software can be freely downloaded from <a 
+href="ftp://ftp.adobe.com">Adobe FTP Server</a>. <i>USAGE OF Ghost View
+IS NOT RECOMMENDED. YOU MAY GET INCORRECT RESULTS FOR PRINTING.</i>
+ </li>
+</ul>
+<dt><p>Project is based on GD Library 1.2 (author 
+<a href="http://sunsite.unc.edu/boutell/index.html">Tom Boutell</a>) for
+GIF-image creation and CPDF Library 2.0.2 (
+<a href="http://www.fastio.com">FastIO Systems</a>) for printable copy
+creation.</p></dt>
+<dt><p>Project is being developed with a financial support of
+<a href="http://www.rfbr.ru">RFBR</a> (project MAC #02-07-06096)</p></dt>
+
+<dt><p>If you have any comments, or bug reports, you may send them to the
+author: <a href="mailto:chil@astronet.ru">chil@astronet.ru</a></p></dt>
+</dl>
+<p align=right>Igor Chilingarian<br>
+2003, January, 12-th</p>
+
+</small>
+
+<%ARGS>
+</%ARGS>
+
+<%INIT>
+</%INIT>

@@ -1,0 +1,91 @@
+<table border="0" cellspacing="0" cellpadding="1" bgcolor="#000080" width="100%">
+<tr><td nowrap width="100%" bgcolor="#000080">
+<small><b><font color="white">General options</font></b></small></td></tr>
+<tr><td nowrap width="100%" bgcolor="#000080" width="100%">
+<table border="0" cellspacing="2" cellpadding="0" bgcolor="#CCCCFF">
+<tr valign="top"><td nowrap><& telescope.msn,
+   telescope	=> $telescope,
+   tel_desc	=> $tel_desc
+&>
+<& fsize.msn, 
+   fsdeg	=> $fsdeg, 
+   fsmin	=> $fsmin,
+   tel_desc	=> $tel_desc,
+&><br>
+<& sky_objects.msn,
+   objid	=> $objid,
+&>
+</td><td nowrap align="center"><& coord.msn, 
+   alphah	=> $alphah,
+   alpham	=> $alpham,
+   alphas	=> $alphas,
+   deld		=> $deld,
+   delm		=> $delm,
+   dels		=> $dels,
+&>
+<& map_size.msn, 
+   xsize	=> $xsize,
+&></td></tr>
+% if ($complex_form==1) {
+<tr><td nowrap valign="top"><small><input type=checkbox name=dcbnd value=1 
+% if ($dcbnd eq 1) {
+	checked 
+% }
+>Constellation boundaries</small></td>
+    <td nowrap><small><input type=checkbox name=mirrorx value=1 
+% if ($mirrorx eq 1) {
+	checked 
+% }
+>X Flip</small></td></tr>
+<tr><td nowrap valign="top"><small><input type=checkbox name=dgrids value=1 
+% if ($dgrids eq 1) {
+	checked 
+% }
+>Grids</small></td><td nowrap valign="top"><small><input type=checkbox name=mirrory value=1 
+% if ($mirrory eq 1) {
+	checked 
+% }
+>Y Flip</small></td></tr>
+<tr><td nowrap colspan=2 valign="top"><small>with cell size
+<& cellsize.msn, name=>'xcs', csize=>$xcs &>by
+<& cellsize.msn, name=>'ycs', csize=>$ycs &>
+</small></td></tr>
+% } else {
+<input type="hidden" name="dcbnd" value="1">
+<input type="hidden" name="dgrids" value="1">
+<input type="hidden" name="xcs" value="0">
+<input type="hidden" name="ycs" value="0">
+<input type="hidden" name="mirrorx" value="0">
+<input type="hidden" name="mirrory" value="0">
+% }
+</table>
+</td></tr>
+</table>
+
+<%ARGS>
+ $xsize		=> undef
+ $alphah	=> undef
+ $alpham	=> undef
+ $alphas	=> undef
+ $deld		=> undef
+ $delm		=> undef
+ $dels		=> undef
+ $telescope	=> undef
+ $tel_desc	=> undef
+ $fsdeg		=> undef
+ $fsmin		=> undef
+ $dcbnd		=> undef
+ $dgrids	=> undef
+ $complex_form	=> undef
+ $xcs		=> undef
+ $ycs		=> undef
+ $mirrorx	=> undef
+ $mirrory	=> undef
+ $objid		=> undef
+</%ARGS>
+
+<%ONCE>
+</%ONCE>
+
+<%INIT>
+</%INIT>

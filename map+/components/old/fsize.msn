@@ -1,0 +1,16 @@
+<table border="0" cellspacing="0" cellpadding="0" >
+%#<tr>&nbsp;<td></td><td><small>deg</small></td><td><small>min</small></td></tr>
+<tr><td><small>Field size:</small></td>
+<td valign="top">
+<small><input type="text" name="fsdeg" value=<% $fsdeg %>
+	size=2></td><td align="left"><small><%chr(156)%></small></td><td valign="top" align="left">
+<small><input type="text" name="fsmin" value=<% sprintf("%5.2lf",$fsmin) %>
+	size=5></td><td align="left"><small>' </small></td></tr></table>
+
+<%ARGS>
+ $fsdeg	=> 50
+ $fsmin	=> 0
+</%ARGS>
+
+<%INIT>
+</%INIT>

@@ -1,0 +1,19 @@
+<small>Field size
+<br>
+<input type="text" name="fsdeg" value=<% $fsdeg %> size=2
+ onchange="if (telescope.options[last_tel].selected==false) {
+	telescope.options[last_tel].selected = true;
+}">
+&deg;
+<input type="text" name="fsmin" value=<% sprintf("%5.2f",$fsmin) %> size=5
+ onchange="if (telescope.options[last_tel].selected==false) {
+	telescope.options[last_tel].selected = true;
+}">
+'
+<%ARGS>
+ $fsdeg		=> 60
+ $fsmin		=> 0
+</%ARGS>
+
+<%INIT>
+</%INIT>

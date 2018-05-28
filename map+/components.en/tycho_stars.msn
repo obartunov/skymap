@@ -1,0 +1,97 @@
+%if ($nmatches > 0) {
+<p>TYCHO stars near selected point
+%#<div align="center">
+
+<form name="tychostars"><table border="0" cellspacing="1" cellpadding="2">
+<tr>
+<td bgcolor="#9999FF"></td>
+<td nowrap align="center" bgcolor="#BBBBFF">R.A.</td>
+<td nowrap align="center" bgcolor="#BBBBFF">Dec.</td>
+<td nowrap align="center" bgcolor="#BBBBFF">V</td>
+<td nowrap align="center" bgcolor="#BBBBFF">B-V</td>
+<td nowrap align="center" bgcolor="#BBBBFF">pmRA</td>
+<td nowrap align="center" bgcolor="#BBBBFF">pmDec</td>
+<td nowrap align="center" bgcolor="#BBBBFF">par</td>
+</tr>
+
+<%PERL>
+my ($delsign,
+	$alp_s,$del_s,
+	$alp_h,$alp_m,
+	$del_d,$del_m,
+	$alp_str,$del_str, $mag_str,
+	$alpout, $delout, $magout, $b_vout, $move_button);
+for (my $i=0; $i<$nmatches; $i++){
+	my $tyc_star=$tychosel->[$i];
+	$alpout=$tyc_star->{ra};
+	$delout=abs($tyc_star->{dec});
+	$magout=$tyc_star->{mag};
+	$b_vout=$tyc_star->{b_v};
+	$alp_h=int($alpout);
+	$alp_m=int(60*($alpout-int($alpout)));
+	$alp_s=60.0*((60*($alpout-int($alpout)))-int(60*($alpout-int($alpout))));
+
+	$delsign=($tyc_star->{dec} >= 0.0)? '+' : '-';
+	$del_d=int($delout);
+	$del_m=int(60*($delout-int($delout)));
+	$del_s=60.0*((60*($delout-int($delout)))-int(60*($delout-int($delout))));
+
+	$alp_str=sprintf("%02d %02d %05.2f",$alp_h,$alp_m,$alp_s);
+	$del_str=$delsign.sprintf("%02d %02d %04.1f",$del_d,$del_m,$del_s);
+	$mag_str=sprintf("V=%d,%03d",int($magout),int(1000.0*($magout-int($magout))));
+
+	$move_button="<input type=button value=\" < \" onclick=\"move_coords($alpout,".$tyc_star->{dec}.");\">";
+        $m->out(sprintf("<tr><td nowrap align=\"right\" bgcolor=\"#9999FF\">%s</td>",$move_button.add_obj_button($alp_str,$del_str,$mag_str)));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$alp_str));
+        $m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%s</td>\n",$del_str));
+	$m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.3f</td>\n",$magout));
+	$m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.3f</td>\n",$b_vout));
+	$m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.3f</td>\n",$tyc_star->{pm_ra}));
+	$m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.3f</td>\n",$tyc_star->{pm_dec}));
+	$m->out(sprintf("<td nowrap align=\"right\" bgcolor=\"#FAFAFA\">%10.3f</td>\n",$tyc_star->{par}));
+        $m->out("</tr>\n");
+
+}
+</%PERL>
+
+</table></form>
+%#</div>
+%}
+
+%if ($nmatches == 0) {
+<p>No TYCHO stars found
+%}
+%if ((($nmatches % 10)==1)&&(($nmatches > 20)||($nmatches < 10))) {
+<p><%$nmatches%> star found
+%}
+%if (($nmatches % 10 >=2)&&($nmatches % 10 <=4)&&(($nmatches > 20)||($nmatches <10))) {
+<p><%$nmatches%> stars found
+%}
+%if (($nmatches % 10 >=5)||(($nmatches % 10 ==0)&&($nmatches >0))||(($nmatches<=19)&&($nmatches>=5))) {
+<p><%$nmatches%> stars found
+%}
+
+<%ARGS>
+ $ra		=> undef
+ $dec		=> undef
+ $z		=> undef
+ $maglim	=> undef
+ $SIZEX		=> undef
+</%ARGS>
+
+<%ONCE>
+sub add_obj_button {
+my ($alpha_s,$delta_s,$objname)=@_;
+my $res=sprintf("<input type=\"button\" value=\" + \" onclick=\"window.opener.add_to_list('%s %s %s\\n'); return false\">",
+           $alpha_s, $delta_s, $objname);
+return $res
+}
+</%ONCE>
+
+<%INIT>
+use SkyMap::GetNear;
+my $map=SkyMap::GetNear->new($ra,$dec,$maglim,12.0,$z,$SIZEX,1);
+my $tychosel=$map->select_tychostars();
+my $nmatches=scalar @{$tychosel};
+my $Pi=3.1415926535897932;
+</%INIT>

@@ -1,0 +1,59 @@
+-------------------------------------------------------------------------------
+                                EGRET
+
+egret library
+
+DESCRIPTION:
+  Egret is a small package by Nasa Extragalactic Database used to recognize
+  designations of objects providen by the user and re-spell it in a
+  standard format.
+  ftp://ned.ipac.caltech.edu/pub/ned/name.resolver/
+
+DEPENDENCIES:  
+  none
+
+INSTALL:
+  The package is automatically always installed.
+  User-level targets are:
+      make install-egret        # Manual installation
+      make uninstall-egret      # Uninstall
+      make help-egret           # Display this documentation
+      make which-egret          # List installed egret files
+
+PROBLEMS:
+  If egret does not compile you can try to configure Pleinpot with
+  option:    configure --disable-egret 
+  and only standard spelling will be recognized.
+-------------------------------------------------------------------------------
+!Original README
+!This is the package for EGRET, originally written for NED 
+!
+!Makefile
+!
+!source code:
+!    egret.c
+!    egretc.c 
+!    egret.util.c
+!    egret.h
+!
+!sample input file for egretc:
+!    micro_db
+!
+!document:
+!    Egret.doc
+!    It is in troff format. Type "make doc" to print it out.
+!
+!special notes:
+!    Notes
+!
+!egret.c is a sample program to show how to use this system.
+!    Type "make egret" to get the testing executable
+!
+!
+!egretc.c creates a flex rule file called muscles and two  C-code files called
+!egret.rect.c and egret.rect.h
+!
+!
+!Xiuqin Wu, NED software engineer
+!August 21, 1992
+

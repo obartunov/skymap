@@ -1,0 +1,44 @@
+<html>
+
+<title>Создание подписей на карте</title>
+<head></head>
+<body bgcolor="#9999FF">
+<center>
+<form name="form_labels">
+<textarea cols="37" rows="8" name="plotlabels" 
+	style="width: 80%"
+	onchange="window.opener.document.forma.plotlabels.value=plotlabels.value;">
+<% $plotlabels %>
+</textarea>
+<br>
+<small>
+<input type="button" value="Перерисовать карту" 
+      onclick="window.opener.document.forma.plotlabels.value=plotlabels.value;
+	window.opener.document.forma.submit.click();
+	return false">
+<input type=button value="Очистить список" 
+      onclick="plotlabels.value='';window.opener.document.forma.plotlabels.value='';return false">
+<p align="center"><input type="button" value="Закрыть окно" onclick="window.close(this.window)"></p>
+</form>
+</center>
+Вводите описания объектов в формате:
+<pre>
+R.A.(J2000) Dec.(J2000)
+HH MM SS.SS +DD MM SS.S Обозначение
+</pre>Например,<pre>
+11 03 43.83 +61 45 04.0 Dubhe
+</pre>
+Либо используйте кнопки "+" в координатном окне.
+</small></body></html>
+
+<%ARGS>
+ $plotlabels    => undef
+</%ARGS>
+
+<%ONCE>
+</%ONCE>
+
+<%INIT>
+$plotlabels =~ s/\n+/\n/g;
+
+</%INIT>

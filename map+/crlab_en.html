@@ -1,0 +1,44 @@
+<html>
+
+<title>Labels creation</title>
+<head></head>
+<body bgcolor="#9999FF">
+<center>
+<form name="form_labels">
+<textarea cols="37" rows="8" name="plotlabels" 
+	style="width: 80%"
+	onchange="window.opener.document.forma.plotlabels.value=plotlabels.value;">
+<% $plotlabels %>
+</textarea>
+<br>
+<small>
+<input type="button" value="Redraw the map" 
+      onclick="window.opener.document.forma.plotlabels.value=plotlabels.value;
+	window.opener.document.forma.submit.click();
+	return false">
+<input type=button value="Clear the list" 
+      onclick="plotlabels.value='';window.opener.document.forma.plotlabels.value='';return false">
+<p align="center"><input type="button" value="Close" onclick="window.close(this.window)"></p>
+</form>
+</center>
+Enter object descriptions in the following format:
+<pre>
+R.A.(J2000) Dec.(J2000)
+HH MM SS.SS +DD MM SS.S Designation
+</pre>For example,<pre>
+11 03 43.83 +61 45 04.0 Dubhe
+</pre>
+Or use "+" buttons in the coordinate window.
+</small></body></html>
+
+<%ARGS>
+ $plotlabels    => undef
+</%ARGS>
+
+<%ONCE>
+</%ONCE>
+
+<%INIT>
+$plotlabels =~ s/\n+/\n/g;
+
+</%INIT>

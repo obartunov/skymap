@@ -1,0 +1,328 @@
+<& /includes/title.msn, title=>'Astronet > Sky Map, professional edition' &>
+<& /includes/header.msn, top100_id=>$top100_id  &>
+
+<script language="javascript">
+<!--
+last_tel=<%$last_tel%>;
+create_labels=false;
+function add_to_list(valuein)
+{
+//	create_labels.document.form_labels.plotlabels.value+=valuein;
+//	this.document.forma.plotlabels.value=create_labels.document.form_labels.plotlabels.value;
+
+	this.document.forma.plotlabels.value+=valuein;
+	create_labels.document.form_labels.plotlabels.value+=valuein;
+//	create_labels.document.form_labels.plotlabels.value=this.document.forma.plotlabels.value;
+	return false;
+}
+//-->
+</script>
+<p>
+<h3 align="center"><a href="<%build_link("build://www.astronet.ru/db/map/")%>">Sky Map Online</a>&nbsp;|&nbsp;Professional edition</h3>
+<P>
+<div align="center">
+<a href="index_en.html">Simple form</a>&nbsp;|&nbsp;<a href="index_en.html?complex_form=1">Advanced form</a>&nbsp;|&nbsp;<a href="about_en.html">About</a>&nbsp;|&nbsp;<a href="./">Русская версия</a>
+</div>
+<P>
+<form name="forma" action="index_en.html" method="get">
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+<tr><td nowrap rowspan=2 valign="top" align="center" bgcolor="#CCCCFF">
+<& components.en/map_par.msn,
+ xsize		=> $xsize,
+ alphah		=> $alphah,
+ alpham		=> $alpham,
+ alphas		=> $alphas,
+ deld		=> $deld,
+ delm		=> $delm,
+ dels		=> $dels,
+ telescope	=> $telescope,
+ tel_desc	=> $tel_desc,
+ fsdeg		=> $fsdeg,
+ fsmin		=> $fsmin,
+ dgrids		=> $dgrids,
+ dcbnd		=> $dcbnd,
+ complex_form	=> $complex_form,
+ xcs		=> $xcs,
+ ycs		=> $ycs,
+ mirrorx	=> $mirrorx,
+ mirrory	=> $mirrory,
+ objid		=> $objid,
+&>
+<input type="submit" name="submit" value="Plot the map">
+% if ((!$complex_form)||($simple_form)) {
+<input type="submit" name="complex_form" value="Advanced form">
+% } else {
+<input type=hidden name=complex_form value=1>
+<input type="submit" name="simple_form" value="Simple form">
+% }
+</td><td nowrap rowspan=2 valign="top">
+<& components.en/gal_par.msn,
+ rc3disp       => $rc3disp  ,
+ galmaglim     => $galmaglim,
+ supgalmag     => $supgalmag,
+ printmag3     => $printmag3,
+ printngc3     => $printngc3,
+ printic3      => $printic3 ,
+ printugc3     => $printugc3,
+ printpgc3     => $printpgc3,
+ complex_form  => $complex_form,
+&>
+<& components.en/star_par.msn,
+ maglim        => $maglim,
+ slbr          => $slbr,
+ slf           => $slf,
+ printsl       => $printsl,
+ complex_form  => $complex_form,
+&>
+</td></tr>
+<input type="hidden" name="plotlabels" value="<% $plotlabels %>">
+%#<input type="hidden" name="objid" value="<% $objid %>">
+% if ($submit) {
+<input type="hidden" name="mode" value="1">
+% }
+</form>
+</table>
+<p>
+% if ((!$submit)&&(length($simple_form)<2)&&(length($complex_form)<2)&&($mode==0)) {
+<blockquote>
+<& components.en/help_params.msn, complex_form => $complex_form&>
+</blockquote>
+% } else {
+<div align="center">
+<form name="formb" method="get" action="coords_en.html" target="info" onsubmit="info=window.open('about:blank','info','resizable=yes,width=400,height=480,scrollbars=yes');
+% if (length($plotlabels)>20 ) {
+if (!(create_labels.document)) create_labels=window.open('crlab_en.html?plotlabels=<%url_escape($plotlabels."\n")%>','create_labels','resizable=yes,width=350,height=300,scrollbars=yes');
+% }
+" >
+<input type=hidden name=mode value=2>
+<input type=hidden name=a value="<%$a%>">
+<input type=hidden name=d value="<%$d%>">
+<input type=hidden name=z value="<%$z%>">
+<input type=hidden name=maglim value="<%$maglim%>">
+<input type=hidden name=galmaglim value="<%$galmaglim%>">
+<input type=hidden name=dgr value="<%$dgrids%>">
+<input type=hidden name=xsize value="<%$xsize%>">
+<input type=hidden name=supgalmag value="<%$supgalmag%>">
+<input type=hidden name=mirrorx value="<%$mirrorx%>">
+<input type=hidden name=mirrory value="<%$mirrory%>">
+
+R.A.: <%$alphah%>h<%sprintf("%02d",int($alpham))%>m<%$ras%>s, 
+Dec.: <%$deld%><%$degchar%><%sprintf("%02d",int($delm))%>'<%$des%>", 
+Field size: <%$fsxd%><%$degchar%><%$fsxm%>' x <%$fsdeg%><%$degchar%><%$fsym%>'
+<br>
+<a href="crlab_en.html?plotlabels=<%url_escape($plotlabels."\n")%>" target="create_labels" onclick="create_labels=window.open('about:blank','create_labels','resizable=yes,width=350,height=300,scrollbars=yes');">Mark the objects</a>
+&nbsp;|&nbsp;<a href="<%$e."\&pdf=1"%>">Printable copy</a>
+<br>
+<input name="point" type="image" src="<%$e%>" border="0">
+</form></div>
+% }
+
+<& /includes/footer.msn, top100_id=>$top100_id, rffi => 1 &>
+
+<%ARGS>
+ $fsdeg		=> 50
+ $fsmin		=> 0
+ $xsize		=> undef
+ $alphah	=> 12
+ $alpham	=> 0
+ $alphas	=> 0
+ $deld		=> 50
+ $delm		=> 0
+ $dels		=> 0
+ $dgrids	=> undef
+ $dcbnd		=> undef
+ $xcs		=> undef
+ $ycs		=> undef
+ $maglim	=> 7.0
+ $printsl	=> undef
+ $slbr		=> 0.0
+ $slf		=> 13.0
+ $galmaglim	=> 12.0
+ $rc3disp	=> undef
+ $supgalmag	=> undef
+ $printmag3	=> undef
+ $printngc3	=> undef
+ $printic3	=> undef
+ $printugc3	=> undef
+ $printpgc3	=> undef
+ $mode		=> 0
+ $help		=> undef
+ $pdfsub	=> undef
+ $complex_form	=> undef
+ $simple_form	=> undef
+ $telescope	=> 0
+ $mirrorx	=> undef
+ $mirrory	=> undef
+ $plotlabels	=> undef
+ $submit	=> undef
+ $objid		=> -1
+</%ARGS>
+
+<%ONCE>
+my $top100_id = 212444;
+my $tel_desc = {
+		0 => {
+			name	=> "Eye",
+			maglim	=> 7.0,
+			focus	=> 0.01,
+			diam	=> 0.007,
+			field	=> 60.0,
+		},
+		1 => {
+			name	=> "Binocular 15х50",
+			maglim	=> 11.0,
+			focus	=> 0.25,
+			diam	=> 0.05,
+			field	=> 6.0,
+		},
+		2 => {
+			name	=> "4-inch visual",
+			maglim	=> 13.0,
+			focus	=> 0.805,
+			diam	=> 0.11,
+			field	=> 1.5,
+		},
+		3 => {
+			name	=> "6-inch visual",
+			maglim	=> 13.5,
+			focus	=> 1.2,
+			diam	=> 0.15,
+			field	=> 1.0,
+		},
+		4 => {
+			name	=> "4-inch astrograph",
+			maglim	=> 14,
+			focus	=> 0.5,
+			diam	=> 0.1,
+			field	=> 4.0,
+		},
+		5 => {
+			name	=> "8-inch astrograph",
+			maglim	=> 16,
+			focus	=> 1.0,
+			diam	=> 0.2,
+			field	=> 3.0,
+		},
+		6 => {
+			name	=> "16-inch astrograph",
+			maglim	=> 17,
+			focus	=> 4.0,
+			diam	=> 0.4,
+			field	=> 2.0,
+		},
+		8 => {
+			name	=> "Zeiss-600",
+			maglim	=> 17.0,
+			focus	=> 7.0,
+			diam	=> 0.6,
+			field	=> 0.8,
+		},
+		9 => {
+			name	=> "Zeiss-1000",
+			maglim	=> 19.0,
+			focus	=> 13.0,
+			diam	=> 1.0,
+			field	=> 0.5,
+		},
+		10 => {
+			name	=> "2.6m BAO PF",
+			maglim	=> 20.5,
+			focus	=> 10.3,
+			diam	=> 2.6,
+			field	=> 0.5,
+		},
+		11 => {
+			name	=> "2.6m BAO PF+SCORPIO",
+			maglim	=> 20.5,
+			focus	=> 7.6,
+			diam	=> 2.6,
+			field	=> 0.7,
+		},
+		12 => {
+			name	=> "6m SAO RAS PF",
+			maglim	=> 20.5,
+			focus	=> 24.0,
+			diam	=> 6.0,
+			field	=> 0.2,
+		},
+		13 => {
+			name	=> "6m SAO RAS+SCORPIO",
+			maglim	=> 20.5,
+			focus	=> 17.6,
+			diam	=> 6.0,
+			field	=> 0.4,
+		},
+		32767 => {
+			name	=> "Another telescope",
+		}
+};
+</%ONCE>
+
+<%INIT>
+ $xsize ||= 640;
+ $dgrids ||= 0;
+ $dcbnd ||= 0;
+ $printsl ||= 0;
+ $rc3disp ||= 0;
+ $supgalmag ||= 0;
+ $printmag3 ||= 0;
+ $printngc3 ||= 0;
+ $printic3  ||= 0;
+ $printugc3 ||= 0;
+ $printpgc3 ||= 0;
+ $xcs ||=0;
+ $ycs ||=0;
+ $mirrorx ||=0;
+ $mirrory ||=0;
+
+ my $plotlabmy = url_escape($plotlabels."\n");
+ my $degchar="\&deg;";
+ #if ($mode ne 1) { $rc3disp=1; $supgalmag=1; $dgrids=1; $dcbnd=1;}
+ if ($mode ne 1) { $rc3disp=1; $supgalmag=1;}
+
+ if (length($complex_form)>2) {
+	$complex_form=1;
+	$simple_form=0;	
+	$dgrids=1;
+	$dcbnd=1;
+ } 
+ if (length($simple_form)>2){
+	$complex_form=0;
+	$simple_form=1;	
+ }
+
+ if (($telescope < 14)&&($telescope>=0)) {
+	$maglim = $$tel_desc{$telescope}{maglim};
+	$fsdeg = int($$tel_desc{$telescope}{field});
+	$fsmin = 60.0*($$tel_desc{$telescope}{field}-$fsdeg);
+ }
+ my $ras=sprintf("%05.2f",$alphas);
+ my $des=sprintf("%04.1f",$dels);
+ my $fsx=4.0*($fsdeg+$fsmin/60.0)/3.0;
+ my $fsxd=int($fsx);
+ my $fsxm=sprintf("%05.2f",60.0*($fsx-$fsxd));
+ my $fsym=sprintf("%05.2f",$fsmin);
+
+ my $a=$alphah+$alpham/60.0+$alphas/3600.0;
+ my $d=(($deld<0)||(($deld==0)&&($delm<0))||(($deld==0)&&($delm==0)&&($dels<0)))? 
+	-(abs($deld)+abs($delm/60.0)+abs($dels/3600.0)) : 
+		abs($deld)+abs($delm/60.0)+abs($dels/3600.0);
+ my $z=(($fsdeg+$fsmin/60.0)>=0.01)? 50.0/($fsdeg+$fsmin/60.0) : 1;
+
+ my $e="skyc2.cgi?a=$a\&d=$d\&m=".($maglim+0)."\&z=$z\&gr=$dgrids\&xs=$xsize\&db=$dcbnd".
+	"\&rc3=$rc3disp\&galmaxmag=".($galmaglim+0)."\&supunkgal=$supgalmag".
+	"\&printsl=$printsl\&slbr=".($slbr+0)."\&slf=".($slf+0)."\&prn3=$printngc3".
+	"\&pri3=$printic3\&pru3=$printugc3\&prp3=$printpgc3\&prsm3=$printmag3\&".
+	"xcs=$xcs\&ycs=$ycs\&mirrorx=$mirrorx\&mirrory=$mirrory\&plotlabels=$plotlabmy\&objid=$objid";
+ $e=build_link("build://www.astronet.ru/cgi-bin/".$e);
+
+ my @tel_k = keys %{$tel_desc};
+ my $last_tel = scalar @tel_k - 1;
+ ## PDF output
+ if ( $e && $pdfsub ) {
+   $r->header_out("Location",$e."\&pdf=1");
+   $r->status(302);
+   $r->send_http_header();
+   $m->abort();
+ }
+</%INIT>

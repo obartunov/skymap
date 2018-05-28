@@ -1,0 +1,27 @@
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td width="5%"><small><input type=checkbox name=dgrids value="1" 
+% if ($dgrids eq 1) {
+	checked 
+% }
+></small></td><td width="10%"><small>Координаты</small></td><td align="right">
+<small>&nbsp;Размер ячейки:</small></td><td><small>
+<& cellsize.msn, name=>'xcs', value=>$xcs &></small></td><td><small>на</small></td>
+<td><small><& cellsize.msn, name=>'ycs', value=>$ycs &></small>
+</td></tr>
+<tr><td width="5%"><small><input type=checkbox 
+name=dcbnd value="1" 
+% if ($dcbnd eq 1) {
+	checked 
+% }
+></small></td><td colspan="5" width="90%"><small>Границы созвездий</small></td></tr>
+</table>
+
+<%ARGS>
+ $dcbnd		=> undef
+ $dgrids	=> undef
+ $xcs		=> 0
+ $ycs		=> 0
+</%ARGS>
+
+<%INIT>
+</%INIT>

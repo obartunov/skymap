@@ -1,0 +1,73 @@
+<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#9999ff">
+<tr><td width="40%" valign="top">
+<table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="#9999ff">
+%#<tr><td width="100%" colspan="3"><b>Параметры карты:</b></td></tr>
+<tr><td><small>Инструмент:</small>
+</td><td><& telescope.msn, telescope => $telescope, tel_desc => $tel_desc &></td>
+<td rowspan="2">
+  <& coord.msn, 
+   alphah =>$alphah,
+   alpham =>$alpham,
+   alphas =>$alphas,
+   deld =>$deld,
+   delm =>$delm,
+   dels =>$dels,
+  &></td></tr>
+<tr><td><small>Размер карты:</small>
+</td><td><& map_size.msn, xsize => $xsize &></td></tr>
+%#<tr><td>Для звезд</td><td colspan="2">
+%#<& starlabels.msn, printsl =>$printsl, slbr =>$slbr, slf =>$slf &>
+%#</td></tr>
+</table>
+<input type="hidden" name="printsl" value="<%$printsl%>">
+<input type="hidden" name="slbr" value="<%$slbr%>">
+<input type="hidden" name="slf" value="<%$slf%>">
+</td><td><td width="40%" valign="top">
+<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#9999ff">
+%#<tr><td><b>RC3 галактики:</b></td></tr>
+<tr><td>
+  <& rc3params.msn,
+   rc3disp       => $rc3disp,
+   galmaglim     => $galmaglim,
+   supgalmag     => $supgalmag,
+   printmag3     => $printmag3,
+   printngc3     => $printngc3,
+   printic3      => $printic3,
+   printugc3     => $printugc3,
+   printpgc3     => $printpgc3
+  &></td></tr></table></td><td width="20%" valign="center">
+<table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="#9999ff">
+<tr><td nowrap align="center"><input type="submit" name="submit" value="<%$submit%>"><input type="submit" name="pdfsub" value="PDF"></td></tr>
+<tr><td nowrap align="center"><input type="submit" name="complex_form" value="Сложная форма"></td></tr>
+<tr><td nowrap align="center"><small><a href="?">Справка</a></small></td></tr></table></td></tr></table>
+%#<tr><td><input type="submit" name="help" value="Справка"></td></tr></table></td></tr></table>
+
+<%ARGS>
+ $xsize         => undef
+ $alphah        => undef
+ $alpham        => undef
+ $alphas        => undef
+ $deld          => undef
+ $delm          => undef
+ $dels          => undef
+ $printsl       => undef
+ $slbr          => undef
+ $slf           => undef
+ $galmaglim     => undef
+ $rc3disp       => undef
+ $supgalmag     => undef
+ $printmag3     => undef
+ $printngc3     => undef
+ $printic3      => undef
+ $printugc3     => undef
+ $printpgc3     => undef
+ $mode          => undef
+ $submit	=> 'Нарисовать'
+ $pdfsub	=> undef
+ $help		=> undef
+ $telescope	=> undef
+ $tel_desc	=> undef
+</%ARGS>
+
+<%INIT>
+</%INIT>

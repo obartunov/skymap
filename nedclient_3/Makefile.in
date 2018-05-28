@@ -1,0 +1,105 @@
+# The file "Makefile" is automatically generated from Makefile.in when
+# running the configuration script "configure"
+#
+# This Makefile prepares the Ned client library and the executable client
+# program. It is based of the makefiles distributed in the original NED
+# distribution, You can find client.3 at:
+# ftp://ned.ipac.caltech.edu/pub/ned/
+#
+# The present file has been written by Ph. Prugniel for implementation in
+# Pleinpot v 7.6. Modified by Igor Chilingarian.
+#
+# To compile an application with libnedcli, you may need to specify the
+# libraries: -lsocket  -lnsl (hopefully the Pleinpot configure will correctly
+# diagnostize it ...)
+#
+# How to proceed...
+#   before typing "make" you must have done: ./configure
+#   to install the library and the executable provided by the NED team
+#   simply type: make install
+#   then clean the temporary files with: make clean
+#
+#   test: type bin/byname (or whatever path you have set in the --bindir
+#     swich of configure)
+#     and give the name: m87 (or another one).
+#
+#############################################################################
+## PLEINPOT is developed and maintained by Philippe Prugniel
+##            GPL License, see COPYING.
+##            Observatoire de Lyon, F-69561 Saint Genis Laval
+##            tel. (+33) 04 78 86 83 83 fax. (+33) 04 72 72 87 87
+##            prugniel@obs.univ-lyon1.fr
+##            http://www-obs.univ-lyon1.fr/~prugniel/
+#############################################################################
+#-----------------------------------------------------------------------------
+# If your system is BSD based, please define BSD specifically.
+#
+# If you are running Solaris, 
+# you need to define _NO_PROTO when you compile them
+# you need to link your object files with -lsocket and -lnsl 
+# to make executable.
+# you don't need to do ranlib to build the library libnedcli.a
+
+CC = @CC@
+RANLIB = @RANLIB@
+
+# Linux:   CFLAGS = -Wall -DBSD -DLINUX 
+# BSD:     CFLAGS = -Wall -DBSD; 
+# Solaris: CFLAGS = -Wall -D_NO_PROTO
+# AIX: CFLAGS = -Wall -DBSD  -D_BSD 
+CFLAGS = @CFLAGS@
+
+# Linux and BSD: LIBS = -lm
+# Solaris: LIBS = -lm -lsocket  -lnsl
+LIBS = @LIBS@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+libdir = @libdir@
+bindir = @bindir@
+
+SRC = ned_cif.c ned_cli.c ned_err.c ned_sk.c
+OBJ = ned_cif.o ned_cli.o ned_err.o ned_sk.o
+EXE =  name_resolver byname nearname nearposn iau ex_refcode ref
+LIBNED = ${libdir}/libnedcli.a
+
+all : ${LIBNED}
+
+name_resolver: ${LIBNED} name_resolver.o
+	${CC} -o name_resolver name_resolver.o ${LIBNED} ${LIBS}
+
+byname: ${LIBNED} byname.o
+	${CC} -o byname byname.o ${LIBNED} ${LIBS}
+
+nearname: ${LIBNED} nearname.o
+	${CC} -o nearname nearname.o ${LIBNED} ${LIBS}
+
+nearposn: ${LIBNED} nearposn.o
+	${CC} -o nearposn nearposn.o ${LIBNED} ${LIBS}
+
+iau: ${LIBNED} iau.o
+	${CC} -o iau iau.o ${LIBNED} ${LIBS}
+
+ex_refcode: ${LIBNED} ex_refcode.o
+	${CC} -o ex_refcode ex_refcode.o ${LIBNED} ${LIBS}
+
+ref: ${LIBNED} ref.o
+	${CC} -o ref ref.o ${LIBNED} ${LIBS}
+
+${LIBNED}: ${libdir} $(OBJ)
+	ar rcu ${LIBNED} $(OBJ)
+	${RANLIB} ${LIBNED}
+
+install: all ${libdir} ${bindir}
+	cp ${EXE} ${bindir}/
+
+${libdir}: ; mkdir -p $@
+
+${bindir}: ; mkdir -p $@
+
+clean:
+	rm -f ${EXE} *.o ${libdir}/libnedcli.a
+distclean: clean
+	rm -f Makefile
+
+## End ########################################################################
