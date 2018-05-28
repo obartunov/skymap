@@ -330,7 +330,7 @@ main (int argc, char **argv)
 
   out = fopen ("test/gdtest_merge_out.png", "wb");
   gdImagePng(im2, out);
-  close(out);
+  fclose(out);
 
   gdImageDestroy (im2);
   gdImageDestroy (im3);

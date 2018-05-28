@@ -215,6 +215,9 @@ void CompAndPlotGalaxies(MapParamsPtr skymap_par, void *map, gal_rc3 *rc3, long 
                 if (fitek>=Pi) fitek-=Pi;
                 if (fitek<0) 	fitek+=Pi;
                 break;
+			default:
+				fprintf(stderr,"Unknown case %d in galaxies.c\n", chs);
+				exit(1);
             }
             if (skymap_par->mirrorx==1) fitek*=-1.0;
             if (skymap_par->mirrory==1) fitek=Pi-fitek;

@@ -51,7 +51,8 @@ extern "C" {
 #define NMAXANNOTS_PP	50		/* maximum number of annotations and links per page */
 
 /* --------------------------------------------------------------------------------- */
-#define PI		3.141592654
+#include <math.h>
+#define PI		M_PI
 #ifndef YES
   #define YES		1
 #endif

@@ -16,6 +16,10 @@ double *read_boundaries()
     for(i=1;i<13046;i++)
     {
         cbrd=fread(cbrec,sizeof(unsigned char),4,fcb);
+		if(!cbrd) { 
+			fprintf(stderr,"Cannot read boundaries...\n");
+			exit(1);
+		}
         conbnd[2*(i-1)+0]=24.000000*((double)cbrec[0]+256*(double)cbrec[1])/65536.00000;
         if ((cbrec[2]+256*cbrec[3]) > 32767)
           conbnd[2*(i-1)+1] = 90.0*((cbrec[2]/32400.0+256.0/32400.0*cbrec[3])-65536.0/32400.0);

@@ -11,7 +11,7 @@
 typedef struct
 {
     double  ra, dec, mag, fi, Asize, Bsize;
-    unsigned char p_name[30], name2[30], name3[30], name4[30];
+    char p_name[30], name2[30], name3[30], name4[30];
     int     type_obj;
 } gal_rc3;
 

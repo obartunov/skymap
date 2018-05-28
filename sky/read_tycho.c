@@ -14,7 +14,11 @@ long int *read_index_tycho(void)
     if((ft_ind=fopen(TYCHO_INDEX,"r"))==NULL) return NULL;
     for (i=0;i<864;i++)
     {
-        fscanf(ft_ind,"%lf %d %lu\n",&tmp1,&tmp2,&t_index);
+        int nread = fscanf(ft_ind,"%lf %d %lu\n",&tmp1,&tmp2,&t_index);
+		if(nread < 3) { 
+			fprintf(stderr, "Insufficient read in read_tycho.c %d<3\n",nread);
+			exit(1);
+		}
         t_ind[i]=t_index;
     }
     t_ind[864]=TYC_COUNT;
@@ -45,6 +49,10 @@ long int read_zone_tycho(MapParamsPtr skymap_par,
   for(i=1;i<=NMAX;i++)
   {
       tcrd=fread(tycrec,sizeof(unsigned char),16,ftyc);
+	  if(!tcrd) { 
+			fprintf(stderr, "Canot read tycho zone in read_tycho.c\n");
+			exit(1);
+	  }
       (*tyccoord)[2*(i-1)+0]=24.000000*(((long int)tycrec[0]+256*(long int)tycrec[1]+65536*(long int)tycrec[2])/16777216.0); //RA
       (*tyccoord)[2*(i-1)+1] = (tycrec[5] >= 128)? 90.0*((tycrec[3]+256*tycrec[4]+65536*tycrec[5])/8388608.0-2.0) : 90.0*((tycrec[3]+256*tycrec[4]+65536*tycrec[5])/8388608.0); //DEC
       (*tycmag)[i-1]=(short int)((tycrec[6]+256*tycrec[7])/100);
@@ -126,6 +134,10 @@ long int read_zone_tycho_s(MapParamsPtr skymap_par, long int *t_ind,
   for(i=1;i<=NMAX;i++)
   {
       tcrd=fread(tycrec,sizeof(unsigned char),16,ftyc);
+	  if(!tcrd) { 
+			fprintf(stderr, "Canot read tycho zone in read_tycho.c\n");
+			exit(1);
+	  }
       (*tycho_zone)[i-1].ra  = 24.000000*(((long int)tycrec[0]+256*(long int)tycrec[1]+65536*(long int)tycrec[2])/16777216.0); //RA
       (*tycho_zone)[i-1].dec = (tycrec[5] >= 128)? 90.0*((tycrec[3]+256*tycrec[4]+65536*tycrec[5])/8388608.0-2.0) : 90.0*((tycrec[3]+256*tycrec[4]+65536*tycrec[5])/8388608.0); //DEC
       (*tycho_zone)[i-1].mag = (double)(tycrec[6]+256*tycrec[7])/1000.0;

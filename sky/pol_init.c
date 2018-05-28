@@ -7,8 +7,8 @@ void pol_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
     double i,ycur;
     long int yc,yc0;
     int alh_p,alm_p;
-    unsigned char *sss;
-    double RA_center_print,als_p,x_bc,y_bc,alpha_diff,corn_const_hr,corn_consts_hr[4];
+    char *sss;
+    double RA_center_print,als_p,x_bc,y_bc,alpha_diff,/* not used: corn_const_hr,*/ corn_consts_hr[4];
     char degchar;
     double xdir,ydir;
     long int ytop,ybottom,xleft,xright;
@@ -18,7 +18,7 @@ void pol_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
     im=(gdImagePtr)map;
     pdf=(CPDFdoc *)map;
 
-    sss=(unsigned char *)malloc(256);
+    sss=(char *)malloc(256);
     x_bc=0; y_bc=0;
 
     degchar = (skymap_par->pdf==1)? 161 : 7;
@@ -30,7 +30,7 @@ void pol_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
     ybottom = (skymap_par->mirrory==1)? 2: skymap_par->SIZEY-20;
 
 
-    corn_const_hr=12.*atan(((double)skymap_par->SIZEX-84.)/((double)skymap_par->SIZEY-40.))/Pi;
+    /* corn_const_hr=12.*atan(((double)skymap_par->SIZEX-84.)/((double)skymap_par->SIZEY-40.))/Pi; */
     if (skymap_par->Dec_center>0)
     {
         yc = 480*skymap_par->imzoom-ydir*((long int)(17.0*skymap_par->imzoom*skymap_par->zoomk*(90-skymap_par->Dec_center)));

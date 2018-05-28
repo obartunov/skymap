@@ -64,6 +64,9 @@ void CompAndPlotObjects(MapParamsPtr skymap_par, void *map, plotable_obj *objlis
         case 2:
             starcur=CompPolCoord(skymap_par, objlist[i-1].ra, objlist[i-1].dec, 10);
             break;
+		default: 
+			fprintf(stderr,"Unknown case in CompAndPlotObjects %d\n", chs);
+			exit(1);
         }
         if ((starcur.x>19)&&(starcur.y>41)&&
             (starcur.x<skymap_par->SIZEX-42)&&(starcur.y<skymap_par->SIZEY-20))

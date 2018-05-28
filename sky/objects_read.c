@@ -8,12 +8,12 @@ plotable_obj * read_objstxt(char *filename, long int *objnum)
 {
     FILE *fobjs;
     plotable_obj *objs;
-    int i=0,ssres=0;
+    int i=0, ssres;
     double ra,dec,ras,decs,objsize,minsymsize;
     int rah,ram,decd,decm,symtype,color,line_to,decsign;
     unsigned char dsign;
     char designation[255];
-    char buff[1024];
+//    char buff[1024];
 
     if ((fobjs=fopen(filename,"r"))==NULL) return NULL;
     objs=(plotable_obj *)malloc(2048*sizeof(plotable_obj));
@@ -25,7 +25,7 @@ plotable_obj * read_objstxt(char *filename, long int *objnum)
         //        objs=(plotable_obj *)
         //            realloc(objs,4*i*sizeof(plotable_obj));
         //}
-        buff[0]=0;
+//        buff[0]=0;
         //fscanf(fobjs,"%[^\n]",buff);
         //fprintf(stderr,"read_objstxt: |%s|\n",buff);
 
@@ -41,6 +41,10 @@ plotable_obj * read_objstxt(char *filename, long int *objnum)
         //           &symtype,&minsymsize,&color,&line_to,designation);
         //    dsign=0x2b; /* "+" */
         //}
+		if(ssres< 13) { 
+			fprintf(stderr, "SSres %d < 13\n", ssres);
+			exit(1);
+		}
         //if (ssres > 12) {
             ra=(double)rah+(double)ram/60.0+ras/3600.0;
             decsign = (dsign=='-')? -1 : 1;
@@ -137,8 +141,13 @@ char *get_filename(long int obj_id, char **obj_title)
     obj_title_cur = (char *)malloc(sizeof(char)*500);
     filename_cur  = (char *)malloc(sizeof(char)*500);
     while ((!feof(fobjs))&& !((obj_id_cur == obj_id)&&(display_flag==1))){
+		int nread = 
         fscanf(fobjs,"%ld %[^\t] %d %*f %*f %*f %[^\n]",
                &obj_id_cur,obj_title_cur,&display_flag,filename_cur);
+		if(nread < 4 ) {
+			fprintf(stderr,"Not enough read by scanf in objects_read.s: %d < 4\n", nread);
+			exit(1);
+		}
     }
     if ((obj_id_cur==obj_id)&&(display_flag==1)) {
         filename  = (char *)malloc(sizeof(char)*(strlen(filename_cur)+2));

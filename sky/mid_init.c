@@ -8,8 +8,8 @@ void mid_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
     double i;
     long int yc, rmain, x_cb=0, y_cb=0;
     long int rcur;
-    int albeg,alend,alh_p,alm_p;
-    unsigned char *sss;
+    int /* not used: albeg,alend, */ alh_p,alm_p;
+    char *sss;
     double RA_center_print,als_p,RA_center_discret;
     double dlti;
     double xdir,ydir;
@@ -24,7 +24,7 @@ void mid_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
     pdf=(CPDFdoc *)map;
 
     degchar = (skymap_par->pdf==1)? 161 : 7;
-    sss=(unsigned char *)malloc(256);
+    sss=( char *)malloc(256);
     
     xdir = (skymap_par->mirrorx==1)? -1.0 : 1.0;
     ydir = (skymap_par->mirrory==1)? -1.0 : 1.0;
@@ -40,8 +40,9 @@ void mid_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
         rmain = (long int)((90-skymap_par->Dec_center)*17.0*skymap_par->imzoom*skymap_par->zoomk/sin(Pi*skymap_par->Dec_center/180));
         yc = 480*skymap_par->imzoom - ydir*rmain;
         dlti = (skymap_par->Dec_grid_cellsize*(long int)(skymap_par->Dec_center/skymap_par->Dec_grid_cellsize)-skymap_par->Dec_center);
-        albeg=89-(int)(180*atan(640*skymap_par->imzoom/abs(yc))/Pi);
+/*        albeg=89-(int)(180*atan(640*skymap_par->imzoom/abs(yc))/Pi);
         alend=91+(int)(180*atan(640*skymap_par->imzoom/abs(yc))/Pi);
+*/
         for (i=0;i<=100/(skymap_par->Dec_grid_cellsize);i++)
         {
             rcur = (long int)(rmain+(skymap_par->Dec_grid_cellsize*i-dlti)*17.0*skymap_par->imzoom*skymap_par->zoomk);
@@ -256,8 +257,10 @@ void mid_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
         rmain = abs((long int)((90+skymap_par->Dec_center)*17.0*skymap_par->imzoom*skymap_par->zoomk/sin(Pi*skymap_par->Dec_center/180)));
         yc = 480*skymap_par->imzoom+ydir*rmain;
         dlti = -skymap_par->Dec_grid_cellsize*(long int)(skymap_par->Dec_center/skymap_par->Dec_grid_cellsize)+skymap_par->Dec_center;
+/*
         albeg=269-(int)(180*atan(640*skymap_par->imzoom/abs(yc-960*skymap_par->imzoom))/Pi);
         alend=271+(int)(180*atan(640*skymap_par->imzoom/abs(yc-960*skymap_par->imzoom))/Pi);
+*/
         for (i=0;i<=100/(skymap_par->Dec_grid_cellsize);i++)
         {
             rcur = (long int)(rmain+(skymap_par->Dec_grid_cellsize*i-dlti)*skymap_par->imzoom*17.0*skymap_par->zoomk);

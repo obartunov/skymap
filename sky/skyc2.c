@@ -62,9 +62,9 @@ void PlotStars(MapParamsPtr skymap_par,void *map, int *xcoords, int *ycoords, sh
 void canvas_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
 {
      int chs=1; //mid
-     gdImagePtr im;
+//     gdImagePtr im;
      CPDFdoc *pdf;
-     im=(gdImagePtr)map;
+ //    im=(gdImagePtr)map;
      pdf=(CPDFdoc *)map;
 
 
@@ -225,8 +225,8 @@ int cgiMain()
     long int obj_numb=0, obj_add_numb=0;
     plotable_obj *objs_add;
     plotable_obj *objlist;
-    char *objfilename, *objfiletmp, *objtitle;
-    objfiletmp=(char *)malloc(sizeof(char)*100);
+    char *objfilename, /* *objfiletmp, */ *objtitle;
+    // objfiletmp=(char *)malloc(sizeof(char)*100);
 /*#endif*/
 
     im=NULL;
@@ -275,6 +275,11 @@ int cgiMain()
     //cgi_r = cgiFormInteger("plot_add",&skymap_par->plot_add_data,0);
     //strcpy(objfilename,"/astrodata/sky_map_pro/adddata.txt");
     //objfilename=strcat(objfilename,objfiletmp);
+
+if(!cgi_r) { 
+	fprintf(stderr, "CGI_R is false\n");
+	exit(1);
+}
 
     usepdf=skymap_par->pdf;
 

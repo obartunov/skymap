@@ -115,7 +115,7 @@ void print_pdf_header(long length)
     printf("Content: sky_map.pdf%c",10);
     printf("Content-disposition: inline; filename=\"sky_map.pdf\"%c",10);
     printf("Content-type: application/pdf%c", 10);
-    printf("Content-Length: %d%c%c", length, 10, 10);
+    printf("Content-Length: %ld%c%c", length, 10, 10);
     //printf("Content-type: application/pdf\n");
     //printf("Pragma: no-cachep\n\n");
 }
@@ -2107,7 +2107,7 @@ int cgiMain()
 
     int xcsi,ycsi;
     char *bufPDF;
-    long pdf_length;
+    int pdf_length;
     double
         aa,dd,aa1,dd1;
     point3 pntl;

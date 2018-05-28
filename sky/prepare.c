@@ -72,6 +72,10 @@ CPDFdoc *PrepareImagePDF(MapParamsPtr skymap_par)
         URLshift = 1.4;
     }
     oldDomain = cpdf_setPlotDomain(pdf, myDomain);
+	if(!oldDomain) { 
+		fprintf(stderr,"cannot setPlotDomain in prepare.c\n");
+		exit(1);
+	}
     cpdf_setgrayStroke(pdf,0.0);
 
     cpdf_setgrayFill(pdf, 0.0);    /* Black */

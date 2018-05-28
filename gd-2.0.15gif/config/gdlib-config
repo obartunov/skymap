@@ -62,7 +62,7 @@ while test $# -gt 0; do
 	echo 15
 	;;
     --ldflags)
-	echo   -L/usr/lib64  -L/usr/lib64
+	echo   
 	;;
     --libs)
 	echo -lXpm -lX11 -ljpeg -lfreetype -lpng -lz -lm 
@@ -74,7 +74,7 @@ while test $# -gt 0; do
 	echo "GD library  2.0.15"
 	echo "includedir: $includedir"
 	echo "cflags:     -I${prefix}/include"
-	echo "ldflags:      -L/usr/lib64  -L/usr/lib64"
+	echo "ldflags:      "
 	echo "libs:       -lXpm -lX11 -ljpeg -lfreetype -lpng -lz -lm "
 	echo "libdir:     $libdir"
 	;;

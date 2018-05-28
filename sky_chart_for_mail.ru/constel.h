@@ -1700,7 +1700,7 @@ double **dec1p;
 
 	/* sanity check the count */
 	if (n != NEDGES) {
-	    printf ("cns_edges(): n=%d NEDGES=%d\n", n, NEDGES);
+	    printf ("cns_edges(): n=%d NEDGES=%ld\n", n, NEDGES);
 	    exit (1);
 	}
 	

@@ -54,6 +54,7 @@ gdImageStringFT (gdImage * im, int *brect, int fg, char *fontlist,
 #else
 
 #include "gdcache.h"
+#include "ft2build.h"
 #include "freetype/freetype.h"
 #include "freetype/ftglyph.h"
 

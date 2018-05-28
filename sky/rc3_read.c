@@ -14,6 +14,10 @@ gal_rc3 * read_rc3data()
     for(i=1;i<=23023;i++)
     {
         rc3r=fread(rc3rec,sizeof(unsigned char),20,frc3);
+		if(!rc3r) {
+			fprintf(stderr, "fread returned zero in read_rc3ata\n");
+			exit(1);
+		}
         rc3[i-1].ra=24.000000*((double)rc3rec[0]+256*(double)rc3rec[1])/65536.00000;
         if ((rc3rec[2]+256*rc3rec[3]) > 32767)
             rc3[i-1].dec = 90.0*((rc3rec[2]/32400.0+256.0/32400.0*rc3rec[3])-65536.0/32400.0);

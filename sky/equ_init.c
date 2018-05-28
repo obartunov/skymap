@@ -9,7 +9,7 @@ void equ_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
     long int xcur,ycur;
     int alh_p,alm_p;
     double xdir,ydir;
-    unsigned char *sss;
+    char *sss;
     double RA_center_print,als_p;
     int check_p=0;
     
@@ -21,7 +21,7 @@ void equ_init(MapParamsPtr skymap_par,void *map,int color,int draw_labels)
     pdf=(CPDFdoc *)map;
 
     degchar = (skymap_par->pdf==1)? 161 : 7;
-    sss=(unsigned char *)malloc(256);
+    sss=( char *)malloc(256);
 
     xdir = (skymap_par->mirrorx==1)? -1.0 : 1.0;
     ydir = (skymap_par->mirrory==1)? -1.0 : 1.0;

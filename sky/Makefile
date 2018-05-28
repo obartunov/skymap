@@ -1,9 +1,9 @@
 CC=gcc
 AR=ar
-CFLAGS=-O3 -fPIC -Wall -I../gd1.2c/ -I../ClibPDF/source/ -I../cgic/ -I/usr/local/pgsql/include/ -DUSE_HL
+CFLAGS=-O3 -fPIC -Wall -I../gd1.2c/ -I../ClibPDF/source/ -I../cgic/ -I/usr/local/pgsql/include/ 
 LIBS=-L./ -L../ClibPDF/source/ -L../cgic/ -L../gd1.2c/ -L/usr/local/pgsql/lib/ -lgd -lm -lcgic -lcpdf -lpq
 ADDLIBS=-lgetnear
-MAKE=gmake
+MAKE=make
 
 all: sky libgetnear.a
 

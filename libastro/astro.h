@@ -1,5 +1,5 @@
 #ifndef PI
-#define	PI		3.141592653589793
+#define	PI		M_PI
 #endif
 
 /* conversions among hours (of ra), degrees and radians. */

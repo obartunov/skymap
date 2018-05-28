@@ -27,7 +27,12 @@ long int **read_index_a20(char ***zone_fnames)
         if((fa20_ind=fopen(i_fname,"r"))==NULL) return NULL;
         for (j=0;j<96;j++)
         {
-            fscanf(fa20_ind,"%lf %ld %ld\n",&tmp1,&a20_index,&tmp2);
+            int nread = fscanf(fa20_ind,"%lf %ld %ld\n",&tmp1,&a20_index,&tmp2);
+		    if(nread < 3) { 
+				fprintf(stderr, "Isufficienet read  in read_a20.c: %d < 3\n",nread);
+				exit(1);
+		    }
+
             a20_ind[j][i]=a20_index;
         }
         a20_ind[96][i]=a20_index+tmp2;
@@ -66,6 +71,10 @@ long int read_zone_a20(MapParamsPtr skymap_par,
     for (i=1;i<(a20_ind[x+1][y]-a20_ind[x][y]);i++)
     {
         a20rd=fread(a20rec,sizeof(unsigned char),12,fa20);
+	    if(!a20rd) { 
+			fprintf(stderr, "Canot read tycho zone in read_a20.c\n");
+			exit(1);
+	    }
         ra_c =(167772.16*a20rec[0]+655.36*a20rec[1]+
                     2.56*a20rec[2]+  0.01*a20rec[3])/(15.*3600.);
         dec_c=(167772.16*a20rec[4]+655.36*a20rec[5]+
@@ -101,7 +110,7 @@ long int read_zone_a20(MapParamsPtr skymap_par,
 int zone_check_a20(MapParamsPtr skymap_par,int i,int j)
 {
     int chs_l=1,k=0;
-    starxy stemp1,s_corn[8];
+    starxy /* not used ? stemp1, */s_corn[8];
     double a_c,d_c,a_cz[8],d_cz[8];
     int Value=0;
 
@@ -131,7 +140,7 @@ int zone_check_a20(MapParamsPtr skymap_par,int i,int j)
         {
             s_corn[k]=CompEquCoord(skymap_par, a_cz[k], d_cz[k], 255);
         }
-        stemp1=CompEquCoord(skymap_par, a_c, d_c, 255);
+//        stemp1=CompEquCoord(skymap_par, a_c, d_c, 255);
         Value = (((s_corn[0].x<0)&&(s_corn[1].x<0)&&(s_corn[2].x<0))||
                  ((s_corn[0].x>skymap_par->SIZEX)&&(s_corn[1].x>skymap_par->SIZEX)&&(s_corn[2].x>skymap_par->SIZEX))||
                  ((s_corn[0].y<0)&&(s_corn[3].y<0)&&(s_corn[5].y<0))||
@@ -142,7 +151,7 @@ int zone_check_a20(MapParamsPtr skymap_par,int i,int j)
         {
             s_corn[k]=CompEquCoord(skymap_par, a_cz[k], d_cz[k], 255);
         }
-        stemp1=CompEquCoord(skymap_par, a_c, d_c, 255);
+// not used ?        stemp1=CompEquCoord(skymap_par, a_c, d_c, 255);
         Value = (((s_corn[0].x<0)&&(s_corn[1].x<0)&&(s_corn[2].x<0))||
                  ((s_corn[0].x>skymap_par->SIZEX)&&(s_corn[1].x>skymap_par->SIZEX)&&(s_corn[2].x>skymap_par->SIZEX))||
                  ((s_corn[0].y<0)&&(s_corn[3].y<0)&&(s_corn[5].y<0))||
@@ -153,7 +162,7 @@ int zone_check_a20(MapParamsPtr skymap_par,int i,int j)
         {
             s_corn[k]=CompEquCoord(skymap_par, a_cz[k], d_cz[k], 255);
         }
-        stemp1=CompEquCoord(skymap_par, a_c, d_c, 255);
+// not used ?        stemp1=CompEquCoord(skymap_par, a_c, d_c, 255);
         Value = (((s_corn[0].x<0)&&(s_corn[1].x<0)&&(s_corn[2].x<0))||
                  ((s_corn[0].x>skymap_par->SIZEX)&&(s_corn[1].x>skymap_par->SIZEX)&&(s_corn[2].x>skymap_par->SIZEX))||
                  ((s_corn[0].y<0)&&(s_corn[3].y<0)&&(s_corn[5].y<0))||
@@ -161,6 +170,7 @@ int zone_check_a20(MapParamsPtr skymap_par,int i,int j)
 
         break;
     }
+
     return Value;
 }
 
@@ -190,6 +200,10 @@ long int read_zone_a20_s(MapParamsPtr skymap_par,
     for (i=1;i<(a20_ind[x+1][y]-a20_ind[x][y]);i++)
     {
         a20rd=fread(a20rec,sizeof(unsigned char),12,fa20);
+	    if(!a20rd) { 
+			fprintf(stderr, "Canot read tycho zone in read_a20.c\n");
+			exit(1);
+	    }
         ra_c =(167772.16*a20rec[0]+655.36*a20rec[1]+
                     2.56*a20rec[2]+  0.01*a20rec[3])/(15.*3600.);
         dec_c=(167772.16*a20rec[4]+655.36*a20rec[5]+

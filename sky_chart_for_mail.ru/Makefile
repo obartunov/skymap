@@ -2,7 +2,7 @@ CC=gcc
 AR=ar
 CFLAGS=-O3 -I./ -I../gd-2.0.15gif/ -I../ClibPDF/source/ -I../libastro/ -I../cgic/
 LIBS=-L../gd-2.0.15gif/ -L../libastro/ -L../ClibPDF/source/ -L../cgic/ -lgd -lm -lastro -lcpdf -lcgic -ljpeg -lpng -lz
-MAKE=gmake
+MAKE=make
 
 all: sky_cgi
 

@@ -8,6 +8,7 @@ AC_PREREQ(2.54)
 AC_INIT([GD], [2.0.15], [gd@boutell.com])
 AC_CONFIG_SRCDIR([gd.c])
 AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_MACRO_DIRS([config])
 
 GDLIB_MAJOR=2
 GDLIB_MINOR=0

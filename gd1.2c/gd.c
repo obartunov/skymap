@@ -464,7 +464,7 @@ void gdImageCharUp(gdImagePtr im, gdFontPtr f, int x, int y, unsigned char c, in
 	}
 }
 
-void gdImageString(gdImagePtr im, gdFontPtr f, int x, int y, unsigned char *s, int color)
+void gdImageString(gdImagePtr im, gdFontPtr f, int x, int y,  char *s, int color)
 {
 	int i;
 	int l;
@@ -475,7 +475,7 @@ void gdImageString(gdImagePtr im, gdFontPtr f, int x, int y, unsigned char *s, i
 	}
 }
 
-void gdImageStringUp(gdImagePtr im, gdFontPtr f, int x, int y, unsigned char *s, int color)
+void gdImageStringUp(gdImagePtr im, gdFontPtr f, int x, int y,  char *s, int color)
 {
 	int i;
 	int l;
@@ -1663,28 +1663,28 @@ gdImageCreateFromGif(FILE *fd)
        imageNumber = 1;
        if (! ReadOK(fd,buf,6)) {
 		return 0;
-	}
+       }
        if (strncmp((char *)buf,"GIF",3) != 0) {
 		return 0;
-	}
+       }
        strncpy(version, (char *)buf + 3, 3);
        version[3] = '\0';
 
        if ((strcmp(version, "87a") != 0) && (strcmp(version, "89a") != 0)) {
 		return 0;
-	}
+       }
        if (! ReadOK(fd,buf,7)) {
 		return 0;
-	}
+       }   
        BitPixel        = 2<<(buf[4]&0x07);
        ColorResolution = (int) (((buf[4]&0x70)>>3)+1);
        Background      = buf[5];
        AspectRatio     = buf[6];
 
        if (BitSet(buf[4], LOCALCOLORMAP)) {    /* Global Colormap */
-               if (ReadColorMap(fd, BitPixel, ColorMap)) {
-			return 0;
-		}
+            if (ReadColorMap(fd, BitPixel, ColorMap)) {
+                return 0;
+            }
        }
        for (;;) {
                if (! ReadOK(fd,&c,1)) {

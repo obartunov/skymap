@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h> /* For unlink function */
+#include <stdlib.h>
 #include "gd.h"
 
 /* A short program which converts a .png file into a .gd file, for
