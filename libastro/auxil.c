@@ -2,6 +2,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "P_.h"
 #include "astro.h"
