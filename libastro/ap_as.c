@@ -1,6 +1,8 @@
 #include "P_.h"
 #include "astro.h"
 #include "circum.h"
+#include <stdlib.h>
+#include <string.h>
 
 /* convert the given apparent RA/Dec to astrometric precessed to Mjd IN PLACE.
  * we have no un-abberation etc so to find the correction: assume
