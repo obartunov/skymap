@@ -1,3 +1,4 @@
+#include <math.h>
 #ifndef PI
 #define	PI		M_PI
 #endif
