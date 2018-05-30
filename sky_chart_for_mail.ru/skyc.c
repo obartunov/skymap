@@ -195,7 +195,8 @@ void compute_planets_pos()
     double lpd0,psi0,rp0,rho0,lam,bet,dia,mag, hp;
 
     cal_mjd(month, day, year+1900, &mod_jd);
-    mod_jd+=(ut-12.0)/24.0;
+//    mod_jd+=(ut-12)/24.0; // a modified-JD is corrected by mjd.c
+    mod_jd+=ut/24.0;
 //    fprintf(ste,"MJD=%lf\n",mod_jd);
     
     sunpos(mod_jd, &lsn, &rsn, &bsn);
@@ -2051,7 +2052,7 @@ void draw_legend(gdImagePtr im)
     static char *k[7]={"O","B","A","F","G","K","M",};
     c=(unsigned char *)malloc(sizeof(char)*5);
     h=(unsigned char *)malloc(sizeof(char)*25);
-    h= (lang==1)?"Звездные величины" : (lang==0)? "Stellar Magnitudes" : "Stellar Magnitudes";
+    h= (lang==1)?"О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫" : (lang==0)? "Stellar Magnitudes" : "Stellar Magnitudes";
     //h="Stellar Magnitudes";
     gdImageString(im, fonts, 15, 10, h, white);
     for (i=0;i<=(int)stmag;i++)
@@ -2066,7 +2067,7 @@ void draw_legend(gdImagePtr im)
     if (colstars==1)
     {
 //        h="Spectral Classes";
-        h=(lang==1)? "Спектральные классы":(lang==0)? "Spectral Classes" : "Spectral Classes";
+        h=(lang==1)? "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫":(lang==0)? "Spectral Classes" : "Spectral Classes";
         gdImageString(im, fonts, SIZEX-77, 10, h, white);
         for (i=0;i<=6;i++)
         {
