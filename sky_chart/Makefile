@@ -1,7 +1,7 @@
 CC=gcc
 AR=ar
-CFLAGS=-O3 -I./ -I../gd-2.0.15gif/ -I../ClibPDF/source/ -I../libastro/ -I../cgic/
-LIBS=-L../gd-2.0.15gif/ -L../libastro/ -L../ClibPDF/source/ -L../cgic/ -lgd -lm -lastro -lcpdf -lcgic -ljpeg -lpng -lz
+CFLAGS=-O3 -I./ -I../gd-2.0.15gif/ -I../ClibPDF/source/ -I../libastro/ -I../cgic/ 
+LIBS=-L../libastro/ -L../gd-2.0.15gif/ -L../ClibPDF/source/ -L../cgic/ -lgd -lm -lastro -lcpdf -lcgic -ljpeg -lpng -lz
 MAKE=make
 
 all: sky_cgi
@@ -13,6 +13,7 @@ libgd.a:
 	(file ../gd-2.0.15gif/libgd.a) || (cd ../gd-2.0.15gif/ && sh configure && $(MAKE) && cp .libs/libgd.a .)
 libastro.a:
 	cd ../libastro/ && $(MAKE)
+	cd ../libastro-3.7.5/ && $(MAKE)
 libcpdf.a:
 	cd ../ClibPDF/source/ && $(MAKE) lib
 libcgic.a:
@@ -24,5 +25,7 @@ clean:
 distclean: clean
 	cd ../cgic/ && $(MAKE) clean
 	cd ../ClibPDF/source/ && $(MAKE) clean
-	cd ../gd-2.0.15gif/ && $(MAKE) clean
+#	cd ../gd-2.0.15gif/ && $(MAKE) clean
 	cd ../libastro/ && $(MAKE) clean
+	cd ../libastro-3.7.5/ && $(MAKE) clean
+	

@@ -81,7 +81,7 @@ gdFontPtr fontl, fonts, fontmb, fontg;
 
 double  ut;
 int     day,month,year;
-double  longi,lat,azimc,heightc;
+double  longi,lati,azimc,heightc;
 double  A11,A12,A21,A22,A23,A31,A32,A33;
 
 //double  y00;
@@ -451,8 +451,8 @@ starxy CompPointCoord(double azimc,double heic,double t,double dec,int sm,
 //    //z1= cos(Pi*t/12)*cos(Pi*lat/180)*cos(Pi*dec/180)+sin(Pi*dec/180)*sin(Pi*lat/180);
 
     x1= sin(Pi*t/12)*cos(Pi*dec/180);
-    y1= cos(Pi*t/12)*sin(Pi*lat/180)*cos(Pi*dec/180)-sin(Pi*dec/180)*cos(Pi*lat/180);
-    z1= cos(Pi*t/12)*cos(Pi*lat/180)*cos(Pi*dec/180)+sin(Pi*dec/180)*sin(Pi*lat/180);
+    y1= cos(Pi*t/12)*sin(Pi*lati/180)*cos(Pi*dec/180)-sin(Pi*dec/180)*cos(Pi*lati/180);
+    z1= cos(Pi*t/12)*cos(Pi*lati/180)*cos(Pi*dec/180)+sin(Pi*dec/180)*sin(Pi*lati/180);
 
     p0001.x  = x1;
     p0001.y  = y1;
@@ -1235,13 +1235,13 @@ double comp_s_time()
 {
     double s_ut0, s_t, s_day;
     long int nday;
-    double mjd0,mjd;
+    double mjd0,mjday;
     s_day=(year0-1)/year0;
     cal_mjd(1, 1.0, 2000, &mjd2000);
     //osennee ravnodenstvie 23.09.99 v 11:31 UT  ///15.5 UT///
     cal_mjd(9, 23, 1999, &mjd0);
-    cal_mjd(month, day, year+1900, &mjd);
-    nday=(long int)(mjd-mjd0);
+    cal_mjd(month, day, year+1900, &mjday);
+    nday=(long int)(mjday-mjd0);
     /*
     if (month>9)
     {
@@ -2159,7 +2159,7 @@ int cgiMain()
     cgi_r = cgiFormInteger("month",&month,1);
     cgi_r = cgiFormInteger("year",&year,2002);
     cgi_r = cgiFormDouble("longitude",&longi,-37.5);
-    cgi_r = cgiFormDouble("latitude",&lat,55.75);
+    cgi_r = cgiFormDouble("latitude",&lati,55.75);
     cgi_r = cgiFormDouble("azimuth",&azimc,0.0);
     cgi_r = cgiFormDouble("height",&heightc,0.0);
     cgi_r = cgiFormDouble("m",&stmag,4.5);
