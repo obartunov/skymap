@@ -128,7 +128,7 @@ TCLIBDIR =
          IMAKESRC = $(CONFIGSRC)/imake
         DEPENDSRC = $(CONFIGSRC)/util
 
-          INCROOT = /usr/include/python3.5m
+          INCROOT = /usr/include
         USRLIBDIR = /usr/X11R6/lib
         VARLIBDIR = /var/lib
          SHLIBDIR = /usr/X11R6/lib
@@ -605,7 +605,7 @@ XMULIB = $(XMULIBONLY) $(XTOOLLIB) $(XLIB)
     USRLIBDIRPATH = $(USRLIBDIR)
         LDPRELIBS = -L$(USRLIBDIR)
        LDPOSTLIBS =
-     TOP_INCLUDES = -I$(INCROOT) $(TOP_X_INCLUDES)
+     TOP_INCLUDES = -I$(INCROOT) $(TOP_X_INCLUDES) $(shell python-config --includes)
   PROJECT_DEFINES =
 
 CXXPROJECT_DEFINES =
