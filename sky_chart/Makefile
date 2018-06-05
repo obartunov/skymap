@@ -28,7 +28,7 @@ clean:
 distclean: clean
 	cd ../cgic/ && $(MAKE) clean
 	cd ../ClibPDF/source/ && $(MAKE) clean
-#	cd ../gd-2.0.15gif/ && $(MAKE) clean
+	cd ../gd-2.0.15gif/ && $(MAKE) clean
 	cd ../libastro/ && $(MAKE) clean
 	cd ../libastro-3.7.5/ && $(MAKE) clean
 	cd ../data/ && $(MAKE) clean

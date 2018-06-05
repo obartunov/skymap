@@ -195,8 +195,7 @@ void compute_planets_pos()
     double lpd0,psi0,rp0,rho0,lam,bet,dia,mag, hp;
 
     cal_mjd(month, day, year+1900, &mod_jd);
-//    mod_jd+=(ut-12)/24.0; // a modified-JD is corrected by mjd.c
-    mod_jd+=ut/24.0;
+    mod_jd+=(ut)/24.0;
 //    fprintf(ste,"MJD=%lf\n",mod_jd);
     
     sunpos(mod_jd, &lsn, &rsn, &bsn);
@@ -215,7 +214,7 @@ void compute_planets_pos()
     planets_dec[SUN]=tmpd;
     planets_sizes[SUN]=206265.0*(696000.0/(149598000.0*rsn));
 //    fprintf(ste,"n=SUN l =%lf b  =%lf\n",180.0*lsn/Pi,180.0*bsn/Pi);
-//    fprintf(ste,"n=SUN  ra=%lf dec=%lf\n",12.0*tmpa/Pi,180.0*tmpd/Pi);
+//    fprintf(ste,"n=SUN ra=%lf dec=%lf\n",12.0*tmpa/Pi,180.0*tmpd/Pi);
 
     for (i=0;i<=7;i++)
     {
@@ -248,7 +247,7 @@ void compute_planets_pos()
     planets_ra[MOON]=tmpa;
     planets_dec[MOON]=tmpd;
     planets_sizes[MOON]=1800.0;
-//    fprintf(ste,"n=MOON ra=%lf dec=%lf\n",12.0*tmpa/Pi,180.0*tmpd/Pi);    
+    
 }
     
 void Draw_Ellipse(gdImagePtr im, double x, double y, double firad, double a, double b, int el_color)
@@ -2052,7 +2051,7 @@ void draw_legend(gdImagePtr im)
     static char *k[7]={"O","B","A","F","G","K","M",};
     c=(unsigned char *)malloc(sizeof(char)*5);
     h=(unsigned char *)malloc(sizeof(char)*25);
-    h= (lang==1)?"О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫" : (lang==0)? "Stellar Magnitudes" : "Stellar Magnitudes";
+    h= (lang==1)?"Звездные величины" : (lang==0)? "Stellar Magnitudes" : "Stellar Magnitudes";
     //h="Stellar Magnitudes";
     gdImageString(im, fonts, 15, 10, h, white);
     for (i=0;i<=(int)stmag;i++)
@@ -2067,7 +2066,7 @@ void draw_legend(gdImagePtr im)
     if (colstars==1)
     {
 //        h="Spectral Classes";
-        h=(lang==1)? "О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫":(lang==0)? "Spectral Classes" : "Spectral Classes";
+        h=(lang==1)? "Спектральные классы":(lang==0)? "Spectral Classes" : "Spectral Classes";
         gdImageString(im, fonts, SIZEX-77, 10, h, white);
         for (i=0;i<=6;i++)
         {
@@ -2108,7 +2107,7 @@ int cgiMain()
 
     int xcsi,ycsi;
     char *bufPDF;
-    int pdf_length;
+    long pdf_length;
     double
         aa,dd,aa1,dd1;
     point3 pntl;
